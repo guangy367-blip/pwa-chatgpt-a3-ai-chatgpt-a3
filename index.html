@@ -299,10 +299,10 @@
     <section class="ios-card p-4">
       <div class="flex items-center justify-between">
         <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">展板数量</h2>
-        <span class="text-[12px] text-[#8E8E93]">二选一</span>
+        <span class="text-[12px] text-[#8E8E93]">三选一</span>
       </div>
 
-      <div class="mt-4 grid grid-cols-2 gap-2">
+      <div class="mt-4 grid grid-cols-3 gap-2">
         <input class="style-radio sr-only" type="radio" name="boardCount" id="singleBoard" value="single" checked>
         <label for="singleBoard" class="ios-option p-3">
           <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">单个展板</span>
@@ -346,6 +346,32 @@
         <option value="景观设计">景观设计</option>
         <option value="其他">其他</option>
       </select>
+
+      <div id="logoStyleModule" class="mt-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">类型风格</h2>
+          <span class="text-[12px] text-[#8E8E93]">三选一</span>
+        </div>
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="logoSimple" value="简洁现代" checked>
+          <label for="logoSimple" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel1" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">潮玩立体</span>
+            <span id="typeStyleDesc1" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">3D家族</span>
+          </label>
+
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="logoComplex" value="复杂精致">
+          <label for="logoComplex" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel2" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">国潮符号</span>
+            <span id="typeStyleDesc2" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">文化纹样</span>
+          </label>
+
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="logoHanddrawn" value="手绘插画">
+          <label for="logoHanddrawn" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel3" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">治愈可爱</span>
+            <span id="typeStyleDesc3" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">圆润亲和</span>
+          </label>
+        </div>
+      </div>
 
       <label for="idea" class="mt-4 block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">核心关键词</label>
       <textarea id="idea" rows="4" class="ios-field mt-2 w-full resize-none px-3 py-3 text-[15px] leading-6" placeholder="输入3-5个核心关键词，例如：社区共创、微更新、模块化、低碳材料"></textarea>
@@ -572,6 +598,100 @@
     const generateBtn = document.getElementById('generateBtn');
     const copyBtn = document.getElementById('copyBtn');
     const clearBtn = document.getElementById('clearBtn');
+    const logoStyleModule = document.getElementById('logoStyleModule');
+    const typeStyleLabels = [
+      document.getElementById('typeStyleLabel1'),
+      document.getElementById('typeStyleLabel2'),
+      document.getElementById('typeStyleLabel3')
+    ];
+    const typeStyleDescs = [
+      document.getElementById('typeStyleDesc1'),
+      document.getElementById('typeStyleDesc2'),
+      document.getElementById('typeStyleDesc3')
+    ];
+    const typeStyleInputs = [
+      document.getElementById('logoSimple'),
+      document.getElementById('logoComplex'),
+      document.getElementById('logoHanddrawn')
+    ];
+
+    const typeStyleOptions = {
+      'IP设计': [
+        ['潮玩立体', '3D家族', '潮玩立体：3D家族群像、盲盒质感、主色点缀'],
+        ['国潮符号', '文化纹样', '国潮符号：传统元素提取、纹样转译、现代潮流'],
+        ['治愈可爱', '圆润亲和', '治愈可爱：圆润比例、软萌表情、生活场景']
+      ],
+      'LOGO设计': [
+        ['简洁现代', '几何极简', '简洁现代：几何线条、极简造型、低饱和度'],
+        ['复杂精致', '细节层次', '复杂精致：细节丰富、层次分明、装饰性强'],
+        ['手绘插画', '笔触独特', '手绘插画：手绘质感、笔触明显、风格独特']
+      ],
+      '包装设计': [
+        ['高级礼盒', '精致陈列', '高级礼盒：礼盒结构、层次陈列、工艺质感'],
+        ['货架冲击', '强识别', '货架冲击：大色块、强识别、远距离可读'],
+        ['自然手作', '材料肌理', '自然手作：纸张肌理、环保材料、温暖色调']
+      ],
+      '插画设计': [
+        ['叙事绘本', '场景故事', '叙事绘本：完整场景、故事动线、人物关系'],
+        ['商业潮流', '高饱和', '商业潮流：撞色构图、潮流符号、强视觉冲击'],
+        ['东方诗意', '留白意境', '东方诗意：留白、淡彩、水墨肌理']
+      ],
+      '品牌设计': [
+        ['高级极简', '留白克制', '高级极简：大留白、低饱和、精致物料'],
+        ['年轻潮流', '撞色几何', '年轻潮流：撞色系统、几何图形、社交传播感'],
+        ['亲和生活', '温暖场景', '亲和生活：生活化场景、圆润图形、真实互动']
+      ],
+      '图案设计': [
+        ['传统纹样', '文化转译', '传统纹样：纹样提取、连续秩序、东方色调'],
+        ['潮流图形', '大胆撞色', '潮流图形：高对比配色、节奏重复、街头感'],
+        ['自然肌理', '柔和连续', '自然肌理：植物纹理、柔和配色、细腻重复']
+      ],
+      '服装设计': [
+        ['先锋廓形', '结构感', '先锋廓形：夸张轮廓、结构线、秀场张力'],
+        ['日常机能', '实穿细节', '日常机能：功能口袋、模块细节、面料性能'],
+        ['东方新中式', '含蓄层次', '东方新中式：盘扣、叠穿、克制色调']
+      ],
+      '信息可视化设计': [
+        ['极简数据', '清晰秩序', '极简数据：网格清晰、颜色克制、阅读顺畅'],
+        ['科技大屏', '发光界面', '科技大屏：深色底、发光线条、动态数据感'],
+        ['手绘信息图', '亲和说明', '手绘信息图：图标化表达、轻松阅读、亲和配色']
+      ],
+      '书籍装帧设计': [
+        ['文学典雅', '纸张质感', '文学典雅：纸张肌理、细腻排版、低饱和色'],
+        ['先锋实验', '错位构成', '先锋实验：错位排版、强留白、材料实验'],
+        ['商业精品', '精装陈列', '商业精品：精装质感、系列陈列、工艺细节']
+      ],
+      '产品设计': [
+        ['极简科技', '干净高端', '极简科技：干净背景、产品特写、低饱和材质'],
+        ['生活温度', '真实使用', '生活温度：人物互动、生活场景、温暖材质'],
+        ['未来概念', '发光结构', '未来概念：透明材质、发光线条、概念场景']
+      ],
+      '工业设计': [
+        ['理性工程', '结构清晰', '理性工程：爆炸结构、材料说明、功能秩序'],
+        ['硬核机能', '机械力量', '硬核机能：金属质感、粗犷结构、强对比光影'],
+        ['未来装备', '科技冷感', '未来装备：流线造型、科技线条、冷色调']
+      ],
+      '交互设计': [
+        ['iOS极简', '留白清晰', 'iOS极简：大留白、清晰层级、圆角界面'],
+        ['潮流应用', '大胆界面', '潮流应用：高对比色、动态图形、强社交感'],
+        ['数据产品', '理性看板', '数据产品：卡片系统、图表秩序、信息密度可控']
+      ],
+      '室内设计': [
+        ['高级商业', '质感空间', '高级商业：克制材质、重点照明、空间留白'],
+        ['温暖生活', '自然材质', '温暖生活：木材肌理、柔和灯光、人物活动'],
+        ['未来沉浸', '光影装置', '未来沉浸：发光结构、沉浸体验、戏剧光影']
+      ],
+      '景观设计': [
+        ['自然生态', '植物层次', '自然生态：植物群落、生态路径、柔和边界'],
+        ['城市活力', '人群互动', '城市活力：活动节点、人群互动、公共家具'],
+        ['东方园林', '借景留白', '东方园林：留白水景、借景构图、诗意节点']
+      ],
+      '其他': [
+        ['极简展示', '作品为主', '极简展示：完整作品大图、少量关键词、充足留白'],
+        ['实验拼贴', '强视觉', '实验拼贴：错位构成、材料拼贴、视觉冲击'],
+        ['场景叙事', '应用氛围', '场景叙事：应用场景、氛围光影、真实落地']
+      ]
+    };
 
     function selectedBoardMode() {
       return document.querySelector('input[name="boardCount"]:checked').value;
@@ -580,6 +700,21 @@
     function selectedPreset() {
       const value = document.querySelector('input[name="school"]:checked').value;
       return presets[value];
+    }
+
+    function selectedLogoStyle() {
+      return document.querySelector('input[name="logoStyle"]:checked')?.value || '简洁现代';
+    }
+
+    function updateLogoStyleModule() {
+      const options = typeStyleOptions[projectTypeInput.value] || typeStyleOptions['其他'];
+      logoStyleModule.classList.remove('hidden');
+      options.forEach((option, index) => {
+        typeStyleInputs[index].value = option[2];
+        typeStyleLabels[index].textContent = option[0];
+        typeStyleDescs[index].textContent = option[1];
+      });
+      document.getElementById('logoSimple').checked = true;
     }
 
     function cleanText(value, fallback) {
@@ -647,8 +782,9 @@
     }
 
     function styleRulesText(preset, tone) {
-      const toneRules = tone.rules.map((rule) => `${tone.name}适配：${rule}`);
-      return [...preset.rules, ...toneRules].map((rule) => `- ${rule}`).join('\n');
+      const baseRules = pickSome(preset.rules, 2, 2);
+      const toneRule = randomPick(tone.rules);
+      return [...baseRules, `${tone.name}适配：${toneRule}`].map((rule) => `- ${rule}`).join('\n');
     }
 
     function detectThemeSubject(projectType, title, keywords) {
@@ -700,10 +836,13 @@
     function typeRulesText(projectType, title, keywords) {
       const rules = typeRules[projectType];
       const derivatives = derivativeRulesText(projectType, title, keywords);
-      if (!rules && derivatives.length === 0) {
+      const compactRules = rules ? pickSome(rules, 1, 2) : [];
+      const derivative = derivatives.length > 0 ? [randomPick(derivatives)] : [];
+      const typeStyleRule = selectedLogoStyle();
+      if (compactRules.length === 0 && derivative.length === 0 && !typeStyleRule) {
         return '';
       }
-      return `\n【类型专属要求】\n${[...(rules || []), ...derivatives].map((rule) => `- ${rule}`).join('\n')}\n`;
+      return `\n【类型风格】\n- ${typeStyleRule}\n${[...compactRules, ...derivative].map((rule) => `- ${rule}`).join('\n')}\n`;
     }
 
     function randomInt(min, max) {
@@ -800,6 +939,7 @@
         projectType: projectTypeInput.value,
         keywords,
         customRequirements: cleanText(customInput?.value || '', ''),
+        logoStyle: selectedLogoStyle(),
         tone: detectThemeTone(title, keywords),
         randomProfile: randomizationProfile(),
         imageRatio: ratio.imageRatio,
@@ -808,208 +948,654 @@
       };
     }
 
-    // Prompt builders intentionally keep a fixed structure so outputs stay predictable.
-    function buildSinglePrompt() {
-      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
-      return `请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-核心关键词：${keywords}
+    function ironLawText() {
+      return `【绝对铁律（违反即失败）】
+本展板绝对禁止任何段落式文字，所有文字只能是单个关键词或 2-3 字短语
+所有说明性内容必须用图形、图表、图标、示意图表达
+任何板块文字占比不得超过该板块面积的 10%
+单行文字最多不超过 8 个字
+禁止使用任何完整句子`;
+    }
 
-【核心要求】
-图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
-${randomProfile.wording.concise}
-每个板块都必须有对应的视觉图像作为主体
-${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+    function coreRequirementsText(inputs) {
+      const { ratioLabel } = inputs;
+      return `【核心要求】
+${ironLawText()}
+图字比例：${ratioLabel}
+留白比例：20%-30%
+文字只做标题/标签
+调研分析全部图形化
+主视觉必须最大
+模块之间要有呼吸感`;
+    }
+
+    function styleSectionText(inputs, title = '【选中风格】排版规范') {
+      const { preset, tone } = inputs;
+      return `${title}
+仅参考所选院校风格的构图、留白、层级与视觉节奏
+禁止在画面中出现任何院校名称、校徽、logo、水印
+主题调性：${tone.name}
+${styleRulesText(preset, tone)}`;
+    }
+
+    function creativeDirectionText() {
+      const ideas = [
+        '主视觉可轻微破框，模块保持整洁',
+        '允许错位叠压，但必须留白充足',
+        '用大图制造冲击，小图只做节奏',
+        '像作品集跨页，不像信息表格',
+        '局部可裁切放大，形成高级感',
+        '用负空间制造呼吸感和焦点'
+      ];
+      return `【创意表达】\n- ${randomPick(ideas)}`;
+    }
+
+    function strictForbiddenText(inputs, seriesLabel = '禁止事项') {
+      const strictRules = [
+        '禁止任何段落式文字',
+        '禁止任何完整句子',
+        '禁止单行超过 8 字',
+        '禁止说明性长文',
+        '禁止文字堆叠',
+        '禁止院校标志',
+        '禁止留白不足'
+      ];
+      const extra = inputs.randomProfile.forbidden
+        .filter((rule) => !rule.includes('20 字'))
+        .map((rule) => rule.replace('禁止出现任何段落式文字', '禁止任何段落式文字'));
+      return `【${seriesLabel}】\n${shuffled([...new Set([...strictRules, ...extra])]).join('\n')}`;
+    }
+
+    function commonIntro(inputs, countText) {
+      const { projectType, title, keywords } = inputs;
+      return `请为我生成${countText} A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+核心关键词：${keywords}`;
+    }
+
+    function typeBoardStructures(projectType) {
+      const structures = {
+        'IP设计': [
+          {
+            title: 'IP 核心形象总览',
+            lines: [
+              '生成竖版A3尺寸高校设计作业IP展板，100%参考云南瓦猫IP展板的高级作品集质感',
+              '整体：字少图多，3D潮玩视觉效果为绝对核心，黑白灰底色 + IP主色点缀',
+              '字体：无衬线粗体标题 + 细体英文辅助，边框整洁，元素对齐规整',
+              '固定结构：顶部通栏大标题 + 中部主视觉群像 + 下方2×2模块化分区',
+              '顶部通栏：大标题「IP中文名称 IP形象设计」',
+              '顶部通栏：英文副标题「IP英文名称 Image Design」',
+              '顶部通栏：右上角小字「核心文化/主题系列」',
+              '顶部通栏：左上角极简说明仅2行，提取核心元素 + 潮玩美学 + 风格关键词',
+              '中部主视觉：IP主形象 + 4款同系列家族形象，共5个高清3D渲染图，占版面1/3高度',
+              '中部背景：极简水墨云纹或几何底纹',
+              '模块1：核心主形象 | Core Image：IP标准正面全身超清3D渲染图',
+              '模块2：盲盒系列 | Blind Box Series：5款不同主题盲盒3D渲染图',
+              '模块3：细节拆解 | Detail Breakdown：头部/身体3个核心细节放大特写',
+              '模块4：标准色卡 | Color Palette：5个主辅色色块 + 十六进制色值'
+            ]
+          },
+          {
+            title: 'IP 动态与规范延展',
+            lines: [
+              '风格：与展板1完全统一，底色、字体、边框、排版逻辑不变',
+              '固定结构：顶部通栏大标题 + 中部动态主视觉 + 下方2×2模块化分区',
+              '顶部通栏：大标题「IP中文名称 动态与规范延展」',
+              '顶部通栏：英文副标题「IP英文名称 Motion & Standard」',
+              '顶部通栏：右上角小字「核心文化/主题系列」',
+              '中部主视觉：3个核心动态造型，站立、互动、跳跃高清3D渲染图',
+              '中部背景：对应极简主题场景',
+              '模块1：标准三视图 | Three Views：正面、侧面、背面等比例全身3D图',
+              '模块2：表情包系列 | Emoji Pack：开心、生气、惊讶、害羞、比心、发呆',
+              '模块3：主题场景 | Theme Scene：2个IP生活小场景3D渲染图',
+              '模块4：造型变体 | Style Variation：春节、夏日、万圣节限定造型'
+            ]
+          },
+          {
+            title: 'IP 衍生品与落地应用',
+            lines: [
+              '风格：与前两张完全统一，形成完整IP系列展示',
+              '固定结构：顶部通栏大标题 + 中部大型装置主视觉 + 下方2×2模块化分区',
+              '顶部通栏：大标题「IP中文名称 衍生品与落地应用」',
+              '顶部通栏：英文副标题「IP英文名称 Derivatives & Application」',
+              '顶部通栏：右上角小字「核心文化/主题系列」',
+              '中部主视觉：IP大型户外装置3D渲染图',
+              '中部背景：城市广场或商业街区实景合成',
+              '模块1：日用文创 | Daily Goods：马克杯、帆布袋、徽章、手机壳样机',
+              '模块2：餐饮周边 | Catering Merch：咖啡杯、纸杯、吸管套、餐垫样机',
+              '模块3：户外广告 | Outdoor Ads：地铁站海报、灯箱、墙面涂鸦实景合成',
+              '模块4：数字周边 | Digital Products：红包封面、电脑壁纸、头像框效果图'
+            ]
+          }
+        ],
+        'LOGO设计': [
+          {
+            title: 'LOGO 核心展示',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：LOGO 标准彩色版，占比 60%',
+              '下方横向 3 分区：黑白反白版',
+              '下方横向 3 分区：单色版',
+              '下方横向 3 分区：最小使用尺寸 + 安全距离示意图'
+            ]
+          },
+          {
+            title: 'LOGO 规范系统',
+            lines: [
+              '顶部通栏：品牌规范',
+              '中部主视觉区：标准字与图形组合规范',
+              '下方横向 3 分区：品牌标准色卡，带色值',
+              '下方横向 3 分区：辅助图形展示',
+              '下方横向 3 分区：不同背景色应用效果'
+            ]
+          },
+          {
+            title: 'LOGO 实际应用',
+            lines: [
+              '顶部通栏：应用展示',
+              '中部主视觉区：核心应用场景效果图',
+              '下方 2×2 模块：名片应用',
+              '下方 2×2 模块：手提袋应用',
+              '下方 2×2 模块：招牌应用',
+              '下方 2×2 模块：社交媒体头像'
+            ]
+          }
+        ],
+        '包装设计': [
+          {
+            title: '包装整体展示',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：包装立体组合效果图，多角度展示',
+              '下方横向 2 分区：平面展开图',
+              '下方横向 2 分区：材质与工艺示意图，图标 + 关键词'
+            ]
+          },
+          {
+            title: '包装细节展示',
+            lines: [
+              '顶部通栏：设计细节',
+              '中部主视觉区：核心视觉元素放大',
+              '下方 2×2 模块：局部细节特写 1',
+              '下方 2×2 模块：局部细节特写 2',
+              '下方 2×2 模块：局部细节特写 3',
+              '下方 2×2 模块：色彩系统'
+            ]
+          },
+          {
+            title: '系列与应用',
+            lines: [
+              '顶部通栏：系列展示',
+              '中部主视觉区：系列化包装整体陈列',
+              '下方横向 2 分区：不同规格包装展示',
+              '下方横向 2 分区：货架陈列效果图'
+            ]
+          }
+        ],
+        '插画设计': [
+          {
+            title: '主插画展示',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：完整主插画作品，占比 70%',
+              '下方横向 2 分区：色彩系统',
+              '下方横向 2 分区：创作风格说明，关键词'
+            ]
+          },
+          {
+            title: '细节与过程',
+            lines: [
+              '顶部通栏：创作过程',
+              '中部主视觉区：线稿与上色对比',
+              '下方 2×2 模块：局部细节放大 1',
+              '下方 2×2 模块：局部细节放大 2',
+              '下方 2×2 模块：局部细节放大 3',
+              '下方 2×2 模块：草图迭代过程'
+            ]
+          },
+          {
+            title: '应用展示',
+            lines: [
+              '顶部通栏：商业应用',
+              '中部主视觉区：核心应用效果图',
+              '下方横向 3 分区：书籍封面应用',
+              '下方横向 3 分区：海报应用',
+              '下方横向 3 分区：周边产品应用'
+            ]
+          }
+        ],
+        '品牌设计': [
+          {
+            title: '品牌核心识别',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：LOGO + 标准字组合',
+              '下方横向 2 分区：品牌标准色 + 辅助色卡',
+              '下方横向 2 分区：品牌理念关键词'
+            ]
+          },
+          {
+            title: '视觉系统',
+            lines: [
+              '顶部通栏：视觉识别系统',
+              '中部主视觉区：辅助图形展示',
+              '下方 2×2 模块：字体规范',
+              '下方 2×2 模块：排版示例',
+              '下方 2×2 模块：图形元素拆解',
+              '下方 2×2 模块：品牌调性说明'
+            ]
+          },
+          {
+            title: '物料应用',
+            lines: [
+              '顶部通栏：应用展示',
+              '中部主视觉区：核心物料组合',
+              '下方 3×2 网格：6 个不同物料小图',
+              '物料建议：名片、信纸、手提袋、门头、社媒、制服'
+            ]
+          }
+        ],
+        '图案设计': [
+          {
+            title: '核心图案展示',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：完整四方连续图案，占比 65%',
+              '下方横向 2 分区：图案元素拆解',
+              '下方横向 2 分区：色彩系统'
+            ]
+          },
+          {
+            title: '图案变化',
+            lines: [
+              '顶部通栏：图案变体',
+              '中部主视觉区：主图案不同配色版本',
+              '下方 2×2 模块：局部细节放大 1',
+              '下方 2×2 模块：局部细节放大 2',
+              '下方 2×2 模块：二方连续图案',
+              '下方 2×2 模块：单独纹样展示'
+            ]
+          },
+          {
+            title: '应用展示',
+            lines: [
+              '顶部通栏：产品应用',
+              '中部主视觉区：核心应用效果图',
+              '下方横向 3 分区：服装应用',
+              '下方横向 3 分区：家居应用',
+              '下方横向 3 分区：包装应用'
+            ]
+          }
+        ],
+        '服装设计': [
+          {
+            title: '整体效果',
+            lines: [
+              '顶部通栏：系列名称',
+              '中部主视觉区：服装正面 + 背面效果图',
+              '下方横向 2 分区：面料质感展示',
+              '下方横向 2 分区：色彩系统'
+            ]
+          },
+          {
+            title: '设计细节',
+            lines: [
+              '顶部通栏：设计细节',
+              '中部主视觉区：核心设计亮点放大',
+              '下方 2×2 模块：领口细节',
+              '下方 2×2 模块：袖口细节',
+              '下方 2×2 模块：口袋细节',
+              '下方 2×2 模块：工艺说明'
+            ]
+          },
+          {
+            title: '系列与展示',
+            lines: [
+              '顶部通栏：系列展示',
+              '中部主视觉区：系列服装整体展示',
+              '下方横向 2 分区：穿搭效果',
+              '下方横向 2 分区：秀场效果图'
+            ]
+          }
+        ],
+        '信息可视化设计': [
+          {
+            title: '核心图表',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：核心数据可视化图表，占比 60%',
+              '下方横向 2 分区：设计说明关键词',
+              '下方横向 2 分区：数据来源'
+            ]
+          },
+          {
+            title: '图表系统',
+            lines: [
+              '顶部通栏：图表系列',
+              '中部主视觉区：次要数据图表',
+              '下方 2×2 模块：柱状图',
+              '下方 2×2 模块：饼图',
+              '下方 2×2 模块：流程图',
+              '下方 2×2 模块：地图可视化'
+            ]
+          },
+          {
+            title: '应用展示',
+            lines: [
+              '顶部通栏：应用展示',
+              '中部主视觉区：大屏展示效果图',
+              '下方横向 2 分区：网页应用',
+              '下方横向 2 分区：印刷品应用'
+            ]
+          }
+        ],
+        '书籍装帧设计': [
+          {
+            title: '整体外观',
+            lines: [
+              '顶部通栏：书籍名称',
+              '中部主视觉区：封面 + 封底 + 书脊立体展示',
+              '下方横向 2 分区：材质与工艺说明',
+              '下方横向 2 分区：色彩系统'
+            ]
+          },
+          {
+            title: '内页设计',
+            lines: [
+              '顶部通栏：内页版式',
+              '中部主视觉区：核心内页跨页展示',
+              '下方 2×2 模块：目录页',
+              '下方 2×2 模块：正文页',
+              '下方 2×2 模块：插图页',
+              '下方 2×2 模块：章节页'
+            ]
+          },
+          {
+            title: '系列与展示',
+            lines: [
+              '顶部通栏：系列展示',
+              '中部主视觉区：系列书籍整体陈列',
+              '下方横向 2 分区：书籍翻阅效果',
+              '下方横向 2 分区：书店陈列效果图'
+            ]
+          }
+        ],
+        '产品设计': [
+          {
+            title: '问题与调研',
+            lines: [
+              '顶部通栏：问题提出',
+              '中部主视觉区：用户痛点信息图，图标 + 数据',
+              '下方 2×2 模块：竞品分析对比图',
+              '下方 2×2 模块：用户旅程图',
+              '下方 2×2 模块：用户画像',
+              '下方 2×2 模块：设计目标关键词'
+            ]
+          },
+          {
+            title: '设计过程',
+            lines: [
+              '顶部通栏：设计推导',
+              '中部主视觉区：核心方案草图',
+              '下方 2×2 模块：草图迭代过程',
+              '下方 2×2 模块：人机工程学分析图',
+              '下方 2×2 模块：爆炸图',
+              '下方 2×2 模块：材料与工艺说明'
+            ]
+          },
+          {
+            title: '最终成果',
+            lines: [
+              '顶部通栏：最终方案',
+              '中部主视觉区：产品多角度效果图',
+              '下方横向 2 分区：细节特写',
+              '下方横向 2 分区：使用场景图'
+            ]
+          }
+        ],
+        '工业设计': [
+          {
+            title: '结构与调研',
+            lines: [
+              '顶部通栏：问题提出',
+              '中部主视觉区：功能痛点信息图，图标 + 数据',
+              '下方 2×2 模块：竞品结构对比图',
+              '下方 2×2 模块：使用流程图',
+              '下方 2×2 模块：人群尺度图',
+              '下方 2×2 模块：设计目标关键词'
+            ]
+          },
+          {
+            title: '工程推导',
+            lines: [
+              '顶部通栏：设计推导',
+              '中部主视觉区：核心结构草图',
+              '下方 2×2 模块：结构迭代过程',
+              '下方 2×2 模块：人机工程分析图',
+              '下方 2×2 模块：爆炸图',
+              '下方 2×2 模块：材料与生产工艺'
+            ]
+          },
+          {
+            title: '最终成果',
+            lines: [
+              '顶部通栏：最终方案',
+              '中部主视觉区：工业产品多角度渲染图',
+              '下方横向 2 分区：结构细节特写',
+              '下方横向 2 分区：批量应用场景图'
+            ]
+          }
+        ],
+        '交互设计': [
+          {
+            title: '用户研究',
+            lines: [
+              '顶部通栏：用户研究',
+              '中部主视觉区：用户旅程图',
+              '下方 2×2 模块：用户画像',
+              '下方 2×2 模块：痛点分析图',
+              '下方 2×2 模块：需求关键词',
+              '下方 2×2 模块：竞品分析'
+            ]
+          },
+          {
+            title: '界面设计',
+            lines: [
+              '顶部通栏：核心界面',
+              '中部主视觉区：首页高保真效果图',
+              '下方 3×2 网格：6 个关键界面小图'
+            ]
+          },
+          {
+            title: '交互展示',
+            lines: [
+              '顶部通栏：交互流程',
+              '中部主视觉区：核心交互流程图',
+              '下方 2×2 模块：动效示意图',
+              '下方 2×2 模块：用户操作步骤',
+              '下方 2×2 模块：设计亮点',
+              '下方 2×2 模块：原型演示'
+            ]
+          }
+        ],
+        '室内设计': [
+          {
+            title: '整体效果',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：室内空间整体效果图，占比 60%',
+              '下方横向 2 分区：平面布局图',
+              '下方横向 2 分区：设计理念关键词'
+            ]
+          },
+          {
+            title: '空间细节',
+            lines: [
+              '顶部通栏：空间细节',
+              '中部主视觉区：核心区域效果图',
+              '下方 2×2 模块：材质板',
+              '下方 2×2 模块：色彩系统',
+              '下方 2×2 模块：灯光分析图',
+              '下方 2×2 模块：家具布置图'
+            ]
+          },
+          {
+            title: '多角度展示',
+            lines: [
+              '顶部通栏：多角度展示',
+              '中部主视觉区：另一角度室内效果图',
+              '下方横向 2 分区：立面图',
+              '下方横向 2 分区：节点详图'
+            ]
+          }
+        ],
+        '景观设计': [
+          {
+            title: '整体效果',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：景观整体鸟瞰效果图，占比 60%',
+              '下方横向 2 分区：总平面布局图',
+              '下方横向 2 分区：景观理念关键词'
+            ]
+          },
+          {
+            title: '景观节点',
+            lines: [
+              '顶部通栏：空间节点',
+              '中部主视觉区：核心节点效果图',
+              '下方 2×2 模块：植物配置图',
+              '下方 2×2 模块：铺装材质板',
+              '下方 2×2 模块：流线分析图',
+              '下方 2×2 模块：设施布置图'
+            ]
+          },
+          {
+            title: '多角度展示',
+            lines: [
+              '顶部通栏：多角度展示',
+              '中部主视觉区：重要节点透视效果图',
+              '下方横向 2 分区：剖面图',
+              '下方横向 2 分区：节点详图'
+            ]
+          }
+        ],
+        '其他': [
+          {
+            title: '核心作品',
+            lines: [
+              '顶部通栏：项目名称',
+              '中部主视觉区：完整作品展示，占比 70%',
+              '下方横向 2 分区：创作说明关键词',
+              '下方横向 2 分区：色彩系统'
+            ]
+          },
+          {
+            title: '创作过程',
+            lines: [
+              '顶部通栏：创作过程',
+              '中部主视觉区：草图与草稿',
+              '下方 2×2 模块：灵感来源',
+              '下方 2×2 模块：迭代过程',
+              '下方 2×2 模块：材料说明',
+              '下方 2×2 模块：技术手段'
+            ]
+          },
+          {
+            title: '应用展示',
+            lines: [
+              '顶部通栏：应用展示',
+              '中部主视觉区：实际应用效果图',
+              '下方横向 2 分区：不同场景应用',
+              '下方横向 2 分区：整体效果展示'
+            ]
+          }
+        ]
+      };
+
+      return structures[projectType] || structures['其他'];
+    }
+
+    function formatStructure(board, index) {
+      return `【展板 ${index}：${board.title}】\n${board.lines.join('\n')}`;
+    }
+
+    function seriesFiveExtraStructures(inputs) {
+      const { title, keywords } = inputs;
+      return [
+        {
+          title: '文创产品合集展示',
+          lines: [
+            '顶部通栏：项目大标题 + 副标题，占比 10%',
+            '主视觉区：1-2 件核心主打产品的大幅展示，占比 35%',
+            '产品陈列区：6-8 件相关文创产品网格 / 错位陈列，占比 45%',
+            '底部信息区：品牌 LOGO + 关键词，占比 10%',
+            `展示要求：围绕 ${title} / ${keywords} 生成主题文创合集`,
+            '排版要求：实验性拼贴式陈列，大小对比明确'
+          ]
+        },
+        {
+          title: '整体场景效果图展示',
+          lines: [
+            '顶部通栏：项目大标题 + 场景名称，占比 8%',
+            '主场景区：完整高清场景效果图，占比 82%',
+            '底部标注区：场景关键词 + 图标标注，占比 10%',
+            '场景要求：店铺外观 / 室内空间 / 景观场景三选一',
+            '画面要求：真实光影、材质质感、人物活动、空间氛围',
+            '构图要求：单张大图为主，禁止拆分成小图'
+          ]
+        }
+      ];
+    }
+
+    function buildBoardPrompt(inputs, board, index, total) {
+      const { projectType, title, keywords, customRequirements, preset } = inputs;
+      const onlyLine = total > 1 ? `请只生成系列展板的第 ${index} 张，不要生成其他展板。` : '请只生成这一张展板。';
+      const seriesRule = total > 1
+        ? '系列统一：统一色调、统一网格、统一标题系统、统一视觉语言'
+        : '视觉统一：统一色调、统一标题系统、统一视觉语言';
+      return `${onlyLine}
+${commonIntro(inputs, '一张')}
+当前展板：展板 ${index} / ${total}，${board.title}
+${seriesRule}
+
+${coreRequirementsText(inputs)}
 ${typeRulesText(projectType, title, keywords)}
 ${customRequirementsText(customRequirements)}
-【选中风格】排版规范
-严格遵循 ${preset.name} 的排版风格
-主题调性识别：${tone.name}
-${styleRulesText(preset, tone)}
+${styleSectionText(inputs)}
+${creativeDirectionText()}
 
-【展板结构】
-顶部通栏：大标题 + 副标题，占比 ${randomProfile.sections.top}%
-主视觉区：大幅核心效果图，占比 ${randomProfile.sections.main}%
-设计分析区：3-4 个小图 + 简短关键词，占比 ${randomProfile.sections.analysis}%
-成果展示区：2-3 个小图 + 标注，占比 ${randomProfile.sections.result}%
+${formatStructure(board, index)}
 
-【禁止事项】
-${randomProfile.forbidden.join('\n')}`;
+${strictForbiddenText(inputs)}`;
+    }
+
+    function buildSinglePrompt() {
+      const inputs = boardInputs();
+      const board = typeBoardStructures(inputs.projectType)[0];
+      return buildBoardPrompt(inputs, board, 1, 1);
     }
 
     function buildSeriesPrompt() {
-      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
-      const sharedRules = `统一系列规则：三张展板必须统一遵循 ${preset.name} 的排版风格，统一色调、统一网格、统一标题系统、统一视觉语言；图字比例都强制保持 ${ratioLabel}。`;
-      const fixedStructure = `【展板结构】
-顶部通栏：大标题 + 副标题，占比 ${randomProfile.sections.top}%
-主视觉区：大幅核心效果图，占比 ${randomProfile.sections.main}%
-设计分析区：3-4 个小图 + 简短关键词，占比 ${randomProfile.sections.analysis}%
-成果展示区：2-3 个小图 + 标注，占比 ${randomProfile.sections.result}%`;
+      const inputs = boardInputs();
+      const boards = typeBoardStructures(inputs.projectType);
+      return `下面三段请分三次复制给 ChatGPT，每次只出一张图。
 
-      const forbiddenRules = `【禁止事项】
-${randomProfile.forbidden.join('\n')}`;
-
-      return `请把下面三段提示词分三次复制给 ChatGPT 使用。每次只生成一个展板，禁止一次生成三张，这样才能保证每张展板清晰、完整、图像质量高。
-
+${boards.map((board, index) => `====================
+展板${index + 1}：${board.title}
 ====================
-展板1：概念与问题
-====================
-请只生成系列展板的第 1 张，不要生成展板2和展板3。
-请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-本张展板主题：概念与问题。重点建立项目命题、场景矛盾、用户痛点和设计切入点。
-核心关键词：${keywords}
-
-${sharedRules}
-
-【核心要求】
-图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
-${randomProfile.wording.concise}
-每个板块都必须有对应的视觉图像作为主体
-${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
-${typeRulesText(projectType, title, keywords)}
-${customRequirementsText(customRequirements)}
-【选中风格】排版规范
-严格遵循 ${preset.name} 的排版风格
-主题调性识别：${tone.name}
-${styleRulesText(preset, tone)}
-
-${fixedStructure}
-本张展板画面重点：
-顶部通栏放项目大标题和一句极短命题
-主视觉区放强冲击力概念场景图
-设计分析区放3-4张问题、场地、用户、痛点图
-成果展示区放2-3张概念方向或机会点小图
-
-${forbiddenRules}
-
-====================
-展板2：研究与生成
-====================
-请只生成系列展板的第 2 张，不要生成展板1和展板3。
-请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-本张展板主题：研究与生成。重点呈现调研、推演、结构、材料、流程、草图和方案生成逻辑。
-核心关键词：${keywords}
-
-${sharedRules}
-
-【核心要求】
-图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
-${randomProfile.wording.concise}
-每个板块都必须有对应的视觉图像作为主体
-${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
-${typeRulesText(projectType, title, keywords)}
-${customRequirementsText(customRequirements)}
-【选中风格】排版规范
-严格遵循 ${preset.name} 的排版风格
-主题调性识别：${tone.name}
-${styleRulesText(preset, tone)}
-
-${fixedStructure}
-本张展板画面重点：
-顶部通栏放研究主题和阶段短标题
-主视觉区放生成逻辑主图、流程图或爆炸图
-设计分析区放3-4张草图、模型、材料、结构推演图
-成果展示区放2-3张阶段方案或关键节点图
-
-${forbiddenRules}
-
-====================
-展板3：成果与体验
-====================
-请只生成系列展板的第 3 张，不要生成展板1和展板2。
-请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-本张展板主题：成果与体验。重点展示最终方案、关键场景、使用体验、细节节点和完成度。
-核心关键词：${keywords}
-
-${sharedRules}
-
-【核心要求】
-图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
-${randomProfile.wording.concise}
-每个板块都必须有对应的视觉图像作为主体
-${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
-${typeRulesText(projectType, title, keywords)}
-${customRequirementsText(customRequirements)}
-【选中风格】排版规范
-严格遵循 ${preset.name} 的排版风格
-主题调性识别：${tone.name}
-${styleRulesText(preset, tone)}
-
-${fixedStructure}
-本张展板画面重点：
-顶部通栏放最终成果标题和短副标题
-主视觉区放最大幅最终效果图或核心体验图
-设计分析区放3-4张功能、尺度、交互、细节图
-成果展示区放2-3张使用场景、节点、局部标注图
-
-${forbiddenRules}`;
+${buildBoardPrompt(inputs, board, index + 1, 3)}`).join('\n\n')}`;
     }
 
     function buildSeriesFivePrompt() {
-      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
-      return `请为我生成一套5 张连续的 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-核心关键词：${keywords}
+      const inputs = boardInputs();
+      const { projectType } = inputs;
+      const boards = [...typeBoardStructures(projectType), ...seriesFiveExtraStructures(inputs)];
+      return `下面五段请分五次复制给 ChatGPT，每次只出一张图。前3张为${projectType}专属结构，第4张文创合集，第5张整体场景效果图。
 
-【整体要求】
-五张展板严格遵循 ${preset.name} 的统一排版风格
-整体图字比例强制为 ${ratioLabel}，所有展板绝对禁止大段文字
-五张展板视觉语言完全统一，色调一致，形成完整的系列叙事
-${randomProfile.wording.concise}
-每个板块都以视觉图像为主体，文字仅作标注说明
-${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
-${typeRulesText(projectType, title, keywords)}
-${customRequirementsText(customRequirements)}
-【${preset.name} 统一排版规范】
-主题调性识别：${tone.name}
-${styleRulesText(preset, tone)}
-
-【展板 1：项目背景与问题提出】
-顶部通栏：项目大标题 + 副标题
-主视觉区：项目背景全景图 / 核心问题场景图
-内容区：社会现状分析 (3 个数据可视化图表)
-内容区：用户痛点提炼 (3 个小图 + 关键词)
-占比：标题 15%，主视觉 40%，内容区 45%
-
-【展板 2：调研分析与设计洞察】
-顶部通栏：项目大标题 + 调研分析
-主视觉区：用户旅程图 / 竞品分析图
-内容区：用户画像 (2 个角色卡片)
-内容区：核心设计洞察提炼
-占比：标题 15%，主视觉 35%，内容区 50%
-
-【展板 3：设计概念与方案推导】
-顶部通栏：项目大标题 + 设计概念
-主视觉区：核心概念爆炸图 / 思维导图
-内容区：草图推演过程 (4 个迭代版本)
-内容区：关键技术 / 材料说明
-占比：标题 15%，主视觉 35%，内容区 50%
-
-【展板 4：文创合集单展板】
-顶部通栏：项目大标题 + 副标题，占比 10%
-主视觉区：1-2 件核心主打产品的大幅展示，占比 35%
-产品陈列区：6-8 件其他文创产品的网格 / 错位陈列，占比 45%
-底部信息区：品牌 LOGO + 简短说明，占比 10%
-文创产品展示要求：展示与 ${title} / ${keywords} 相关的全套文创产品；每个产品都要有清晰的展示角度和光影效果；产品之间通过色彩、构图或元素进行视觉串联；可以适当添加装饰性元素和负空间增强艺术感
-
-【展板 5：场景效果图单展板】
-顶部通栏：项目大标题 + 场景名称，占比 8%
-主场景区：完整的场景效果图，占比 82%
-底部标注区：简短的场景说明 + 关键信息标注，占比 10%
-场景效果图要求：展示完整的 [店铺外观 / 室内空间 / 景观场景]；要有真实的光影效果、材质质感和人物活动；视角选择要有设计感，能够充分展示空间特点；可以适当添加环境元素增强场景的真实感
-
-【全局禁止事项】
-禁止任何段落式文字描述
-禁止单行文字超过 20 字
-禁止使用表格形式展示内容
-禁止五张展板风格不统一
-禁止将产品简单罗列，必须有设计感的排版
-禁止出现任何产品说明性的段落文字
-禁止使用统一的白色背景，要有整体的视觉氛围
-禁止产品大小一致，要有主次和大小对比
-禁止将场景图分割成多个小图
-禁止在场景图上添加过多的文字标注
-禁止出现任何段落式的文字说明
-禁止留白不足，保证充足的视觉呼吸感
-禁止场景图比例失调或透视错误`;
+${boards.map((board, index) => `====================
+展板${index + 1}：${board.title}
+====================
+${buildBoardPrompt(inputs, board, index + 1, 5)}`).join('\n\n')}`;
     }
 
     function buildPrompt() {
@@ -1062,13 +1648,17 @@ ${styleRulesText(preset, tone)}
       imageRatioInput.value = '80';
       document.getElementById('singleBoard').checked = true;
       document.getElementById('rca').checked = true;
+      document.getElementById('logoSimple').checked = true;
       output.value = '';
       updateRatioDisplay();
+      updateLogoStyleModule();
       showToast('已重置');
     });
 
     imageRatioInput.addEventListener('input', updateRatioDisplay);
+    projectTypeInput.addEventListener('change', updateLogoStyleModule);
     updateRatioDisplay();
+    updateLogoStyleModule();
 
     if ('serviceWorker' in navigator && ['http:', 'https:'].includes(window.location.protocol)) {
       window.addEventListener('load', () => {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'a3-prompt-pwa-v18';
+const CACHE_NAME = 'a3-prompt-pwa-v22';
 const LOCAL_SHELL = [
   './',
   './index.html',
