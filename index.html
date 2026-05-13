@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="A3提示词">
+  <meta name="application-name" content="A3提示词">
+  <meta name="format-detection" content="telephone=no">
+  <title>A3竞赛展板提示词</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', 'Arial', 'sans-serif']
+          },
+          colors: {
+            iosBlue: '#007AFF',
+            iosBg: '#F2F2F7',
+            iosCard: '#FFFFFF',
+            iosLabel: '#1C1C1E',
+            iosSecondary: '#8E8E93',
+            iosSeparator: '#D1D1D6'
+          },
+          boxShadow: {
+            ios: '0 8px 24px rgba(0, 0, 0, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+
+    .app-height {
+      min-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+
+    .phone-shell {
+      width: calc(100vw - 32px);
+      max-width: 398px;
+    }
+
+    @media (min-width: 640px) {
+      .phone-shell {
+        max-width: 1180px;
+      }
+    }
+
+    textarea,
+    input,
+    select,
+    button {
+      font: inherit;
+    }
+
+    label,
+    span,
+    p,
+    h1,
+    h2,
+    button {
+      overflow-wrap: anywhere;
+    }
+
+    .style-radio:checked + label {
+      border-color: #007AFF;
+      background: rgba(0, 122, 255, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(0, 122, 255, 0.18);
+    }
+
+    .style-radio:focus-visible + label,
+    button:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(0, 122, 255, 0.28);
+      outline-offset: 2px;
+    }
+
+    @supports not (color: color-mix(in srgb, black, white)) {
+      .style-radio:checked + label {
+        background: rgba(0, 122, 255, 0.08);
+      }
+    }
+
+    .ios-nav {
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .ios-main {
+      padding-top: calc(env(safe-area-inset-top) + 104px);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 40px);
+    }
+
+    .desktop-layout {
+      display: grid;
+      grid-template-columns: minmax(360px, 440px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .desktop-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .desktop-output {
+      position: sticky;
+      top: calc(env(safe-area-inset-top) + 104px);
+      height: calc(100svh - env(safe-area-inset-top) - 144px);
+      min-height: 620px !important;
+    }
+
+    .ios-card {
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .ios-option {
+      min-height: 76px;
+      border: 1px solid #D1D1D6;
+      border-radius: 12px;
+      background: #FFFFFF;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .ios-button {
+      border-radius: 8px;
+      transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+    }
+
+    .ios-button:active,
+    .ios-option:active {
+      transform: scale(0.95);
+    }
+
+    .ios-range {
+      width: 100%;
+      height: 28px;
+      appearance: none;
+      background: transparent;
+    }
+
+    .ios-range::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #007AFF var(--range-progress, 50%), #D1D1D6 var(--range-progress, 50%));
+    }
+
+    .ios-range::-webkit-slider-thumb {
+      width: 28px;
+      height: 28px;
+      margin-top: -11px;
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .ios-range::-moz-range-track {
+      height: 6px;
+      border-radius: 999px;
+      background: #D1D1D6;
+    }
+
+    .ios-range::-moz-range-progress {
+      height: 6px;
+      border-radius: 999px;
+      background: #007AFF;
+    }
+
+    .ios-range::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 999px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .ios-field {
+      border: 1px solid #D1D1D6;
+      border-radius: 12px;
+      background: #FFFFFF;
+      color: #1C1C1E;
+    }
+
+    .ios-field::placeholder {
+      color: #8E8E93;
+    }
+
+    select.ios-field {
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #8E8E93 50%),
+        linear-gradient(135deg, #8E8E93 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) 19px,
+        calc(100% - 12px) 19px;
+      background-repeat: no-repeat;
+      background-size: 6px 6px, 6px 6px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .ios-card {
+        background: rgba(28, 28, 30, 0.92);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      }
+
+      .ios-option,
+      .ios-field {
+        border-color: #38383A;
+        background: #1C1C1E;
+        color: #F2F2F7;
+      }
+
+      .ios-field::placeholder {
+        color: #8E8E93;
+      }
+
+      .style-radio:checked + label {
+        background: rgba(10, 132, 255, 0.18);
+        border-color: #0A84FF;
+        box-shadow: inset 0 0 0 1px rgba(10, 132, 255, 0.24);
+      }
+
+      .ios-range::-webkit-slider-runnable-track {
+        background: linear-gradient(90deg, #0A84FF var(--range-progress, 50%), #38383A var(--range-progress, 50%));
+      }
+
+      .ios-range::-moz-range-track {
+        background: #38383A;
+      }
+
+      .ios-range::-moz-range-progress {
+        background: #0A84FF;
+      }
+    }
+
+    @media (max-width: 899px) {
+      .desktop-layout {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .desktop-output {
+        position: static;
+        height: auto;
+        min-height: 360px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#F2F2F7] text-[#1C1C1E] antialiased dark:bg-black dark:text-[#F2F2F7]">
+  <header class="ios-nav fixed inset-x-0 top-0 z-20 border-b border-[#D1D1D6]/70 bg-[#F2F2F7]/80 backdrop-blur-lg dark:border-[#38383A]/70 dark:bg-black/70">
+    <div class="phone-shell mx-auto flex items-center justify-between py-4">
+      <div class="min-w-0">
+        <h1 class="truncate text-[20px] font-semibold leading-6 tracking-normal">A3竞赛展板提示词</h1>
+        <p class="mt-1 truncate text-[13px] leading-5 text-[#8E8E93]">强制生成图多字少的A3展板提示词</p>
+      </div>
+      <div class="ml-4 grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#007AFF] text-white shadow-ios">
+        <i class="fa fa-picture-o text-lg" aria-hidden="true"></i>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-height ios-main phone-shell mx-auto desktop-layout">
+    <div class="desktop-panel">
+    <section class="ios-card p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">展板数量</h2>
+        <span class="text-[12px] text-[#8E8E93]">二选一</span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <input class="style-radio sr-only" type="radio" name="boardCount" id="singleBoard" value="single" checked>
+        <label for="singleBoard" class="ios-option p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">单个展板</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">保持原有A3单页输出</span>
+        </label>
+
+        <input class="style-radio sr-only" type="radio" name="boardCount" id="seriesBoards" value="series">
+        <label for="seriesBoards" class="ios-option p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">系列3个展板</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">概念、过程、成果连续叙事</span>
+        </label>
+
+        <input class="style-radio sr-only" type="radio" name="boardCount" id="seriesFiveBoards" value="series5">
+        <label for="seriesFiveBoards" class="ios-option p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">系列5个展板</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">完整竞赛叙事长线</span>
+        </label>
+
+      </div>
+    </section>
+
+    <section class="ios-card p-4">
+      <label for="title" class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">项目名称</label>
+      <input id="title" class="ios-field mt-2 h-11 w-full px-3 text-[15px]" placeholder="例如：城市缝隙中的公共客厅">
+
+      <label for="projectType" class="mt-4 block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">项目类型</label>
+      <select id="projectType" class="ios-field mt-2 h-11 w-full px-3 pr-9 text-[15px]">
+        <option value="IP设计">IP设计</option>
+        <option value="LOGO设计">LOGO设计</option>
+        <option value="包装设计">包装设计</option>
+        <option value="插画设计">插画设计</option>
+        <option value="品牌设计">品牌设计</option>
+        <option value="图案设计">图案设计</option>
+        <option value="服装设计">服装设计</option>
+        <option value="信息可视化设计">信息可视化设计</option>
+        <option value="书籍装帧设计">书籍装帧设计</option>
+        <option value="产品设计">产品设计</option>
+        <option value="工业设计">工业设计</option>
+        <option value="交互设计">交互设计</option>
+        <option value="室内设计">室内设计</option>
+        <option value="景观设计">景观设计</option>
+        <option value="其他">其他</option>
+      </select>
+
+      <label for="idea" class="mt-4 block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">核心关键词</label>
+      <textarea id="idea" rows="4" class="ios-field mt-2 w-full resize-none px-3 py-3 text-[15px] leading-6" placeholder="输入3-5个核心关键词，例如：社区共创、微更新、模块化、低碳材料"></textarea>
+    </section>
+
+    <section class="ios-card p-4">
+      <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">图字比例控制</h2>
+      <p class="mt-1 text-[12px] leading-5 text-[#8E8E93]">此参数会在生成提示词中反复强调</p>
+      <output id="ratioText" for="imageRatio" class="mt-3 inline-flex rounded-full bg-[#007AFF]/10 px-3 py-1 text-[13px] font-semibold text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]">80%图20%字</output>
+
+      <input id="imageRatio" class="ios-range mt-4" type="range" min="70" max="90" step="1" value="80" aria-label="图字比例">
+      <div class="mt-1 flex items-center justify-between text-[12px] text-[#8E8E93]">
+        <span>70%图30%字</span>
+        <span>90%图10%字</span>
+      </div>
+      <p class="mt-3 text-[12px] leading-5 text-[#8E8E93]">生成时会把当前比例写入规则、版面约束和最终强调，避免ChatGPT输出过多文字。</p>
+    </section>
+
+    <section class="ios-card p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">风格选择</h2>
+        <span class="text-[12px] text-[#8E8E93]">四选一</span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <input class="style-radio sr-only" type="radio" name="school" id="rca" value="rca" checked>
+        <label for="rca" class="ios-option min-h-[84px] p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">RCA</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">实验叙事、留白、强视觉主图</span>
+        </label>
+
+        <input class="style-radio sr-only" type="radio" name="school" id="ual" value="ual">
+        <label for="ual" class="ios-option min-h-[84px] p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">UAL</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">过程拼贴、网格节奏、强对比</span>
+        </label>
+
+        <input class="style-radio sr-only" type="radio" name="school" id="caa" value="caa">
+        <label for="caa" class="ios-option min-h-[84px] p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">中国美院</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">东方秩序、材料肌理、克制题跋</span>
+        </label>
+
+        <input class="style-radio sr-only" type="radio" name="school" id="tsinghua" value="tsinghua">
+        <label for="tsinghua" class="ios-option min-h-[84px] p-3">
+          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">清华美院</span>
+          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">理性网格、信息层级、竞赛表达</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="ios-card p-4">
+      <button id="generateBtn" class="ios-button h-14 w-full bg-[#007AFF] px-4 text-[17px] font-semibold text-white shadow-ios">
+        <i class="fa fa-magic mr-2" aria-hidden="true"></i>生成提示词
+      </button>
+    </section>
+    </div>
+
+    <section class="ios-card desktop-output flex min-h-0 flex-col overflow-hidden">
+      <div class="flex shrink-0 items-center justify-between border-b border-[#D1D1D6] px-4 py-3 dark:border-[#38383A]">
+        <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">输出提示词</h2>
+        <div class="flex items-center gap-2">
+          <button id="copyBtn" class="ios-button h-8 w-8 text-[#007AFF] active:bg-[#E5E5EA] dark:text-[#0A84FF] dark:active:bg-[#2C2C2E]" aria-label="复制提示词">
+            <i class="fa fa-copy" aria-hidden="true"></i>
+          </button>
+          <button id="clearBtn" class="ios-button h-8 w-8 text-[#8E8E93] active:bg-[#E5E5EA] dark:active:bg-[#2C2C2E]" aria-label="清空并重置所有输入">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <textarea id="output" class="min-h-[240px] flex-1 resize-none border-0 bg-transparent px-4 py-4 text-[14px] leading-6 text-[#1C1C1E] placeholder:text-[#8E8E93] focus:outline-none dark:text-[#F2F2F7]" readonly placeholder="生成后可直接复制到ChatGPT。"></textarea>
+    </section>
+
+    <p id="toast" class="pointer-events-none fixed left-1/2 top-[calc(env(safe-area-inset-top)+16px)] z-30 -translate-x-1/2 rounded-full bg-[#1C1C1E]/90 px-4 py-2 text-[13px] text-white opacity-0 shadow-ios backdrop-blur-lg transition-opacity duration-200 dark:bg-[#F2F2F7]/90 dark:text-black" role="status">已复制</p>
+  </main>
+
+  <script>
+    // Style presets drive both the visible cards and the generated prompt rules.
+    const presets = {
+      rca: {
+        name: 'RCA皇家艺术学院',
+        style: '实验性强、概念叙事清晰、大面积留白、主视觉具有冲击力，像顶级作品集终审展板',
+        layout: '1张占版面45%的主视觉 + 4至6张过程/细节图 + 少量英文式短标题节奏',
+        rules: [
+          '实验性极强，非对称构图',
+          '大胆的留白和负空间运用',
+          '文字大小对比强烈，错位排版',
+          '图像采用拼贴、解构手法',
+          '色彩克制，多为黑白灰+单一强调色'
+        ]
+      },
+      ual: {
+        name: 'UAL伦敦艺术大学',
+        style: '过程导向、拼贴感、网格错位、视觉资料密集但文字克制，强调研究痕迹与现场感',
+        layout: '6至9张图像以拼贴网格组织，保留清晰阅读路径，文字只作为标签和短句注释',
+        rules: [
+          '叙事性排版，有明确的视觉流',
+          '图像与文字相互穿插融合',
+          '手写体与印刷体混合使用',
+          '丰富的材质纹理表现',
+          '色彩丰富但和谐统一'
+        ]
+      },
+      caa: {
+        name: '中国美术学院',
+        style: '东方秩序、材料肌理、空间留白、含蓄克制，图像像研究卷轴般展开',
+        layout: '横向叙事轴 + 大幅材料/空间图 + 3至5张局部细节，文字呈题跋式短句',
+        rules: [
+          '东方美学，留白意境',
+          '网格系统严谨但不刻板',
+          '书法元素与现代设计结合',
+          '水墨质感和渐变效果',
+          '色彩淡雅，注重色调统一'
+        ]
+      },
+      tsinghua: {
+        name: '清华大学美术学院',
+        style: '理性网格、清晰层级、竞赛评审友好，兼具设计逻辑、功能说明和视觉完成度',
+        layout: '严格三栏或模块化网格，主效果图、爆炸图、流程图、关键数据图按重要性排列',
+        rules: [
+          '理性主义，严谨的网格系统',
+          '信息层级清晰明确',
+          '几何图形的大量运用',
+          '极简主义，去除多余装饰',
+          '色彩明快，对比适中'
+        ]
+      }
+    };
+
+    const typeRules = {
+      'IP设计': [
+        '必须包含IP角色正面、侧面、背面三视图',
+        '展示至少3个不同表情和3个典型动作',
+        '包含IP角色在不同场景中的应用效果图',
+        '突出角色的核心识别特征和色彩系统'
+      ],
+      'LOGO设计': [
+        '必须展示LOGO的标准彩色版、黑白反白版',
+        '包含LOGO在不同背景色上的应用效果',
+        '展示标准字与图形的组合规范',
+        '包含最小使用尺寸和安全距离说明'
+      ],
+      '包装设计': [
+        '必须包含包装平面展开图和立体效果图',
+        '展示包装在不同角度的视觉效果',
+        '体现包装的材质质感和工艺细节',
+        '包含系列化包装的整体展示'
+      ],
+      '插画设计': [
+        '展示完整的主插画作品',
+        '包含至少3个局部细节放大图',
+        '展示插画的色彩系统和风格特点',
+        '包含插画在不同载体上的应用效果'
+      ],
+      '品牌设计': [
+        '展示完整的品牌视觉识别系统',
+        '包含LOGO、标准色、标准字、辅助图形',
+        '展示品牌在名片、信纸、手提袋等物料上的应用',
+        '体现品牌的整体调性和视觉统一性'
+      ],
+      '图案设计': [
+        '展示完整的四方连续图案',
+        '包含图案的局部细节放大图',
+        '展示图案在不同产品上的应用效果',
+        '体现图案的色彩搭配和构成逻辑'
+      ],
+      '服装设计': [
+        '必须包含服装的正面、背面效果图',
+        '展示服装的细节设计和面料质感',
+        '包含服装的穿搭效果和场景展示',
+        '体现设计的整体风格和色彩搭配'
+      ],
+      '信息可视化设计': [
+        '图表设计简洁清晰，数据表达准确',
+        '使用图形化语言代替文字描述',
+        '保持整体视觉风格的统一性',
+        '信息层级明确，阅读逻辑流畅'
+      ],
+      '书籍装帧设计': [
+        '展示书籍封面、封底、书脊的完整设计',
+        '包含内页版式设计示例',
+        '体现书籍的材质和工艺特点',
+        '展示书籍的整体翻阅效果'
+      ],
+      '产品设计': [
+        '必须包含产品的多角度效果图',
+        '展示产品的爆炸图和结构细节',
+        '包含产品的使用场景展示',
+        '体现产品的材质和工艺特点'
+      ],
+      '工业设计': [
+        '展示产品的整体造型和功能结构',
+        '包含人机工程学分析图',
+        '展示产品的生产工艺和材料说明',
+        '体现设计的实用性和美观性'
+      ],
+      '交互设计': [
+        '展示核心界面的高保真效果图',
+        '包含用户操作流程图',
+        '展示关键交互节点的动效示意',
+        '体现产品的用户体验逻辑'
+      ],
+      '室内设计': [
+        '展示空间的整体效果图',
+        '包含平面布局图和立面图',
+        '展示不同角度的空间细节',
+        '体现材质、色彩和灯光的搭配'
+      ],
+      '景观设计': [
+        '展示场地的整体鸟瞰图',
+        '包含总平面图和功能分区图',
+        '展示重要节点的效果图',
+        '体现植物配置和景观结构'
+      ]
+    };
+
+    const titleInput = document.getElementById('title');
+    const projectTypeInput = document.getElementById('projectType');
+    const ideaInput = document.getElementById('idea');
+    const imageRatioInput = document.getElementById('imageRatio');
+    const ratioText = document.getElementById('ratioText');
+    const output = document.getElementById('output');
+    const toast = document.getElementById('toast');
+    const generateBtn = document.getElementById('generateBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function selectedBoardMode() {
+      return document.querySelector('input[name="boardCount"]:checked').value;
+    }
+
+    function selectedPreset() {
+      const value = document.querySelector('input[name="school"]:checked').value;
+      return presets[value];
+    }
+
+    function cleanText(value, fallback) {
+      const text = value.trim().replace(/\s+/g, ' ');
+      return text || fallback;
+    }
+
+    function randomPick(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function shuffled(items) {
+      return [...items].sort(() => Math.random() - 0.5);
+    }
+
+    function pickSome(items, min, max) {
+      const count = min + Math.floor(Math.random() * (max - min + 1));
+      return shuffled(items).slice(0, count);
+    }
+
+    function detectThemeTone(title, keywords) {
+      const titleText = title.toLowerCase();
+      const keywordText = keywords.toLowerCase();
+      const tones = [
+        {
+          name: '亲和接地气型',
+          words: ['社区', '便民', '亲民', '母婴', '宠物', '超市', '便利', '家庭', '邻里', '生活'],
+          rules: ['增加圆润线条、温暖色调、卡通元素、生活化场景', '文字更活泼、更具亲和力', '图像更多真实生活场景、人物互动']
+        },
+        {
+          name: '高级简约型',
+          words: ['高端', '精品', '进口', '奢侈', '设计师', '轻奢', '高级', '极简', '品质'],
+          rules: ['增加大量留白、极简线条、低饱和度色调', '文字更简洁、更有设计感', '图像更多产品特写、干净背景']
+        },
+        {
+          name: '年轻潮流型',
+          words: ['年轻', '潮流', '网红', '潮牌', '茶饮', '文创', '街头', '酷', '社交', '新锐'],
+          rules: ['增加撞色搭配、几何图形、大胆排版', '文字更有个性、更具视觉冲击力', '图像更多潮流元素、街头风格']
+        },
+        {
+          name: '传统国风型',
+          words: ['非遗', '传统', '文化', '国风', '东方', '汉字', '书法', '水墨', '茶', '文脉'],
+          rules: ['增加书法元素、传统纹样、水墨质感', '文字更具文化底蕴', '图像更多传统元素、东方美学场景']
+        },
+        {
+          name: '科技未来型',
+          words: ['科技', '数字', '未来', '智能', 'ai', '数据', '虚拟', '交互', '机器人', '元宇宙'],
+          rules: ['增加科技感线条、渐变效果、发光元素', '文字更简洁、更具未来感', '图像更多科技场景、抽象图形']
+        }
+      ];
+
+      const scored = tones
+        .map((tone) => ({
+          tone,
+          score: tone.words.reduce((sum, word) => {
+            const titleHit = titleText.includes(word) ? 1 : 0;
+            const keywordHit = keywordText.includes(word) ? 2 : 0;
+            return sum + titleHit + keywordHit;
+          }, 0)
+        }))
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      return scored[0]?.tone || randomPick(tones);
+    }
+
+    function styleRulesText(preset, tone) {
+      const toneRules = tone.rules.map((rule) => `${tone.name}适配：${rule}`);
+      return [...preset.rules, ...toneRules].map((rule) => `- ${rule}`).join('\n');
+    }
+
+    function detectThemeSubject(projectType, title, keywords) {
+      const text = `${projectType} ${title} ${keywords}`.toLowerCase();
+      const subjects = [
+        { name: '超市', words: ['超市', '社区', '便民', '生鲜', '便利店'], items: ['购物袋', '价签', '会员卡', '员工制服', '购物车设计'] },
+        { name: '茶饮店', words: ['茶饮', '奶茶', '咖啡', '饮品', '茶店'], items: ['杯子', '杯套', '包装袋', '菜单', '周边产品'] },
+        { name: '花店', words: ['花店', '鲜花', '花束', '植物', '园艺'], items: ['花束包装', '贺卡', '手提袋', '店铺招牌', '礼品贴纸'] },
+        { name: '食品', words: ['食品', '零食', '烘焙', '甜品', '饮料', '餐饮'], items: ['礼盒套装', '手提袋', '产品标签', '宣传海报', '试吃装'] },
+        { name: '化妆品', words: ['化妆品', '护肤', '美妆', '香水', '口红'], items: ['试用装', '礼盒', '手提袋', '产品手册', '柜台陈列'] },
+        { name: '动物IP', words: ['动物', '猫', '狗', '宠物', '熊', '兔'], items: ['毛绒玩具', '文具', '手机壳', 'T恤', '贴纸'] },
+        { name: '文化项目', words: ['非遗', '传统', '文化', '国风', '博物馆'], items: ['纪念票卡', '文创礼盒', '明信片', '纹样贴纸', '手提袋'] },
+        { name: '科技项目', words: ['科技', '数字', '智能', '未来', 'ai'], items: ['启动页视觉', '设备贴纸', '数据卡片', '演示界面', '品牌徽章'] }
+      ];
+
+      return subjects.find((subject) => subject.words.some((word) => text.includes(word)));
+    }
+
+    function defaultDerivativeItems(projectType) {
+      const defaults = {
+        'IP设计': ['表情包', '周边玩偶', '贴纸套装', '胸牌'],
+        'LOGO设计': ['名片', '门头招牌', '社交媒体头像', '应用图标'],
+        '包装设计': ['手提袋', '产品标签', '礼盒套装', '宣传海报'],
+        '插画设计': ['明信片', '海报', '贴纸', '帆布袋'],
+        '品牌设计': ['购物袋', '会员卡', '员工制服', '导视牌'],
+        '图案设计': ['布料应用', '包装纸', '手机壳', '家居产品'],
+        '服装设计': ['吊牌', '穿搭海报', '配饰', '面料样卡'],
+        '信息可视化设计': ['数据卡片', '动态图示', '导览图', '信息海报'],
+        '书籍装帧设计': ['书签', '腰封', '函套', '宣传折页'],
+        '产品设计': ['使用说明卡', '收纳包装', '配件展示', '场景海报'],
+        '工业设计': ['结构说明卡', '材料样板', '操作指引', '应用场景图'],
+        '交互设计': ['启动页', '核心界面卡片', '动效分镜', '用户旅程图'],
+        '室内设计': ['导视牌', '软装清单', '灯光节点', '材质样板'],
+        '景观设计': ['导览牌', '座椅节点', '植物标识牌', '夜景灯光节点']
+      };
+      return defaults[projectType] || [];
+    }
+
+    function derivativeRulesText(projectType, title, keywords) {
+      if (projectType === '其他') {
+        return [];
+      }
+
+      const subject = detectThemeSubject(projectType, title, keywords);
+      const source = subject ? subject.items : defaultDerivativeItems(projectType);
+      return pickSome(source, 2, 3).map((item) => `根据主题补充展示${item}的应用效果`);
+    }
+
+    function typeRulesText(projectType, title, keywords) {
+      const rules = typeRules[projectType];
+      const derivatives = derivativeRulesText(projectType, title, keywords);
+      if (!rules && derivatives.length === 0) {
+        return '';
+      }
+      return `\n【类型专属要求】\n${[...(rules || []), ...derivatives].map((rule) => `- ${rule}`).join('\n')}\n`;
+    }
+
+    function randomInt(min, max) {
+      return min + Math.floor(Math.random() * (max - min + 1));
+    }
+
+    function randomizedSections(enabled) {
+      const defaults = { top: 15, main: 40, analysis: 25, result: 20 };
+      if (!enabled) {
+        return defaults;
+      }
+
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        const top = defaults.top + randomInt(-5, 5);
+        const main = defaults.main + randomInt(-5, 5);
+        const analysis = defaults.analysis + randomInt(-5, 5);
+        const result = 100 - top - main - analysis;
+        if (result >= defaults.result - 5 && result <= defaults.result + 5) {
+          return { top, main, analysis, result };
+        }
+      }
+      return defaults;
+    }
+
+    function randomizationProfile() {
+      const factors = pickSome(['sections', 'details', 'wording', 'forbidden'], 2, 3);
+      const extraDetailPool = [
+        '增加1组材料、肌理或工艺细节特写，强化作品质感',
+        '增加1组真实使用场景图，帮助评委快速理解应用价值',
+        '增加1组局部放大图，突出关键视觉识别点',
+        '增加1组过程草图或结构推演图，强化设计逻辑',
+        '增加1组色彩系统或图形系统小样，提升整体专业度',
+        '增加1组尺度、比例或场景关系图，保证信息清晰'
+      ];
+      const wordingPool = [
+        { impact: '整体排版要有强烈的视觉冲击力和清晰层次感', concise: '文字必须高度压缩，只保留标题、关键词和极短标注' },
+        { impact: '画面需要具备竞赛级视觉张力和明确阅读路径', concise: '所有文字保持克制，避免说明性句子和堆叠信息' },
+        { impact: '版面应形成强主视觉、强秩序、强节奏的专业效果', concise: '文字只作为视觉辅助，不承担大段解释功能' }
+      ];
+      const forbidden = [
+        '禁止出现任何段落式文字',
+        '禁止出现超过 20 字的单行文字',
+        '禁止使用表格形式展示内容',
+        '禁止留白不足，必须保证视觉呼吸感'
+      ];
+
+      return {
+        sections: randomizedSections(factors.includes('sections')),
+        extraDetails: factors.includes('details') ? pickSome(extraDetailPool, 1, 2) : [],
+        wording: factors.includes('wording') ? randomPick(wordingPool) : wordingPool[0],
+        forbidden: factors.includes('forbidden') ? shuffled(forbidden) : forbidden
+      };
+    }
+
+    function extraDetailsText(details) {
+      if (details.length === 0) {
+        return '';
+      }
+      return `\n${details.map((detail) => `- ${detail}`).join('\n')}`;
+    }
+
+    function customRequirementsText(value) {
+      if (!value) {
+        return '';
+      }
+      return `\n【自定义要求】\n- ${value}\n`;
+    }
+
+    function ratioValues() {
+      const imageRatio = Number(imageRatioInput.value);
+      const textRatio = 100 - imageRatio;
+      return {
+        imageRatio,
+        textRatio,
+        label: `${imageRatio}%图${textRatio}%字`
+      };
+    }
+
+    function updateRatioDisplay() {
+      const ratio = ratioValues();
+      const progress = ((ratio.imageRatio - 70) / 20) * 100;
+      ratioText.textContent = ratio.label;
+      imageRatioInput.style.setProperty('--range-progress', `${progress}%`);
+    }
+
+    function boardInputs() {
+      const ratio = ratioValues();
+      const title = cleanText(titleInput.value, '未命名A3竞赛展板');
+      const keywords = cleanText(ideaInput.value, '图多字少、强主视觉、清晰层级、材料细节、竞赛表达');
+      const customInput = document.getElementById('customRequirements') || document.getElementById('customRequirement');
+      return {
+        preset: selectedPreset(),
+        title,
+        projectType: projectTypeInput.value,
+        keywords,
+        customRequirements: cleanText(customInput?.value || '', ''),
+        tone: detectThemeTone(title, keywords),
+        randomProfile: randomizationProfile(),
+        imageRatio: ratio.imageRatio,
+        textRatio: ratio.textRatio,
+        ratioLabel: ratio.label
+      };
+    }
+
+    // Prompt builders intentionally keep a fixed structure so outputs stay predictable.
+    function buildSinglePrompt() {
+      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
+      return `请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+核心关键词：${keywords}
+
+【核心要求】
+图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
+${randomProfile.wording.concise}
+每个板块都必须有对应的视觉图像作为主体
+${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+${typeRulesText(projectType, title, keywords)}
+${customRequirementsText(customRequirements)}
+【选中风格】排版规范
+严格遵循 ${preset.name} 的排版风格
+主题调性识别：${tone.name}
+${styleRulesText(preset, tone)}
+
+【展板结构】
+顶部通栏：大标题 + 副标题，占比 ${randomProfile.sections.top}%
+主视觉区：大幅核心效果图，占比 ${randomProfile.sections.main}%
+设计分析区：3-4 个小图 + 简短关键词，占比 ${randomProfile.sections.analysis}%
+成果展示区：2-3 个小图 + 标注，占比 ${randomProfile.sections.result}%
+
+【禁止事项】
+${randomProfile.forbidden.join('\n')}`;
+    }
+
+    function buildSeriesPrompt() {
+      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
+      const sharedRules = `统一系列规则：三张展板必须统一遵循 ${preset.name} 的排版风格，统一色调、统一网格、统一标题系统、统一视觉语言；图字比例都强制保持 ${ratioLabel}。`;
+      const fixedStructure = `【展板结构】
+顶部通栏：大标题 + 副标题，占比 ${randomProfile.sections.top}%
+主视觉区：大幅核心效果图，占比 ${randomProfile.sections.main}%
+设计分析区：3-4 个小图 + 简短关键词，占比 ${randomProfile.sections.analysis}%
+成果展示区：2-3 个小图 + 标注，占比 ${randomProfile.sections.result}%`;
+
+      const forbiddenRules = `【禁止事项】
+${randomProfile.forbidden.join('\n')}`;
+
+      return `请把下面三段提示词分三次复制给 ChatGPT 使用。每次只生成一个展板，禁止一次生成三张，这样才能保证每张展板清晰、完整、图像质量高。
+
+====================
+展板1：概念与问题
+====================
+请只生成系列展板的第 1 张，不要生成展板2和展板3。
+请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+本张展板主题：概念与问题。重点建立项目命题、场景矛盾、用户痛点和设计切入点。
+核心关键词：${keywords}
+
+${sharedRules}
+
+【核心要求】
+图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
+${randomProfile.wording.concise}
+每个板块都必须有对应的视觉图像作为主体
+${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+${typeRulesText(projectType, title, keywords)}
+${customRequirementsText(customRequirements)}
+【选中风格】排版规范
+严格遵循 ${preset.name} 的排版风格
+主题调性识别：${tone.name}
+${styleRulesText(preset, tone)}
+
+${fixedStructure}
+本张展板画面重点：
+顶部通栏放项目大标题和一句极短命题
+主视觉区放强冲击力概念场景图
+设计分析区放3-4张问题、场地、用户、痛点图
+成果展示区放2-3张概念方向或机会点小图
+
+${forbiddenRules}
+
+====================
+展板2：研究与生成
+====================
+请只生成系列展板的第 2 张，不要生成展板1和展板3。
+请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+本张展板主题：研究与生成。重点呈现调研、推演、结构、材料、流程、草图和方案生成逻辑。
+核心关键词：${keywords}
+
+${sharedRules}
+
+【核心要求】
+图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
+${randomProfile.wording.concise}
+每个板块都必须有对应的视觉图像作为主体
+${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+${typeRulesText(projectType, title, keywords)}
+${customRequirementsText(customRequirements)}
+【选中风格】排版规范
+严格遵循 ${preset.name} 的排版风格
+主题调性识别：${tone.name}
+${styleRulesText(preset, tone)}
+
+${fixedStructure}
+本张展板画面重点：
+顶部通栏放研究主题和阶段短标题
+主视觉区放生成逻辑主图、流程图或爆炸图
+设计分析区放3-4张草图、模型、材料、结构推演图
+成果展示区放2-3张阶段方案或关键节点图
+
+${forbiddenRules}
+
+====================
+展板3：成果与体验
+====================
+请只生成系列展板的第 3 张，不要生成展板1和展板2。
+请为我生成一张 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+本张展板主题：成果与体验。重点展示最终方案、关键场景、使用体验、细节节点和完成度。
+核心关键词：${keywords}
+
+${sharedRules}
+
+【核心要求】
+图字比例强制为 ${ratioLabel}，绝对禁止出现大段文字
+${randomProfile.wording.concise}
+每个板块都必须有对应的视觉图像作为主体
+${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+${typeRulesText(projectType, title, keywords)}
+${customRequirementsText(customRequirements)}
+【选中风格】排版规范
+严格遵循 ${preset.name} 的排版风格
+主题调性识别：${tone.name}
+${styleRulesText(preset, tone)}
+
+${fixedStructure}
+本张展板画面重点：
+顶部通栏放最终成果标题和短副标题
+主视觉区放最大幅最终效果图或核心体验图
+设计分析区放3-4张功能、尺度、交互、细节图
+成果展示区放2-3张使用场景、节点、局部标注图
+
+${forbiddenRules}`;
+    }
+
+    function buildSeriesFivePrompt() {
+      const { preset, title, projectType, keywords, customRequirements, tone, randomProfile, ratioLabel } = boardInputs();
+      return `请为我生成一套5 张连续的 A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
+核心关键词：${keywords}
+
+【整体要求】
+五张展板严格遵循 ${preset.name} 的统一排版风格
+整体图字比例强制为 ${ratioLabel}，所有展板绝对禁止大段文字
+五张展板视觉语言完全统一，色调一致，形成完整的系列叙事
+${randomProfile.wording.concise}
+每个板块都以视觉图像为主体，文字仅作标注说明
+${randomProfile.wording.impact}${extraDetailsText(randomProfile.extraDetails)}
+${typeRulesText(projectType, title, keywords)}
+${customRequirementsText(customRequirements)}
+【${preset.name} 统一排版规范】
+主题调性识别：${tone.name}
+${styleRulesText(preset, tone)}
+
+【展板 1：项目背景与问题提出】
+顶部通栏：项目大标题 + 副标题
+主视觉区：项目背景全景图 / 核心问题场景图
+内容区：社会现状分析 (3 个数据可视化图表)
+内容区：用户痛点提炼 (3 个小图 + 关键词)
+占比：标题 15%，主视觉 40%，内容区 45%
+
+【展板 2：调研分析与设计洞察】
+顶部通栏：项目大标题 + 调研分析
+主视觉区：用户旅程图 / 竞品分析图
+内容区：用户画像 (2 个角色卡片)
+内容区：核心设计洞察提炼
+占比：标题 15%，主视觉 35%，内容区 50%
+
+【展板 3：设计概念与方案推导】
+顶部通栏：项目大标题 + 设计概念
+主视觉区：核心概念爆炸图 / 思维导图
+内容区：草图推演过程 (4 个迭代版本)
+内容区：关键技术 / 材料说明
+占比：标题 15%，主视觉 35%，内容区 50%
+
+【展板 4：文创合集单展板】
+顶部通栏：项目大标题 + 副标题，占比 10%
+主视觉区：1-2 件核心主打产品的大幅展示，占比 35%
+产品陈列区：6-8 件其他文创产品的网格 / 错位陈列，占比 45%
+底部信息区：品牌 LOGO + 简短说明，占比 10%
+文创产品展示要求：展示与 ${title} / ${keywords} 相关的全套文创产品；每个产品都要有清晰的展示角度和光影效果；产品之间通过色彩、构图或元素进行视觉串联；可以适当添加装饰性元素和负空间增强艺术感
+
+【展板 5：场景效果图单展板】
+顶部通栏：项目大标题 + 场景名称，占比 8%
+主场景区：完整的场景效果图，占比 82%
+底部标注区：简短的场景说明 + 关键信息标注，占比 10%
+场景效果图要求：展示完整的 [店铺外观 / 室内空间 / 景观场景]；要有真实的光影效果、材质质感和人物活动；视角选择要有设计感，能够充分展示空间特点；可以适当添加环境元素增强场景的真实感
+
+【全局禁止事项】
+禁止任何段落式文字描述
+禁止单行文字超过 20 字
+禁止使用表格形式展示内容
+禁止五张展板风格不统一
+禁止将产品简单罗列，必须有设计感的排版
+禁止出现任何产品说明性的段落文字
+禁止使用统一的白色背景，要有整体的视觉氛围
+禁止产品大小一致，要有主次和大小对比
+禁止将场景图分割成多个小图
+禁止在场景图上添加过多的文字标注
+禁止出现任何段落式的文字说明
+禁止留白不足，保证充足的视觉呼吸感
+禁止场景图比例失调或透视错误`;
+    }
+
+    function buildPrompt() {
+      const mode = selectedBoardMode();
+      if (mode === 'series') {
+        return buildSeriesPrompt();
+      }
+      if (mode === 'series5') {
+        return buildSeriesFivePrompt();
+      }
+
+      return buildSinglePrompt();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => {
+        toast.classList.add('opacity-0');
+        toast.classList.remove('opacity-100');
+      }, 1400);
+    }
+
+    generateBtn.addEventListener('click', () => {
+      output.value = buildPrompt();
+      showToast('已生成');
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!output.value.trim()) {
+        output.value = buildPrompt();
+      }
+
+      try {
+        await navigator.clipboard.writeText(output.value);
+        showToast('已复制');
+      } catch (error) {
+        output.select();
+        document.execCommand('copy');
+        showToast('已复制');
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      titleInput.value = '';
+      projectTypeInput.value = 'IP设计';
+      ideaInput.value = '';
+      imageRatioInput.value = '80';
+      document.getElementById('singleBoard').checked = true;
+      document.getElementById('rca').checked = true;
+      output.value = '';
+      updateRatioDisplay();
+      showToast('已重置');
+    });
+
+    imageRatioInput.addEventListener('input', updateRatioDisplay);
+    updateRatioDisplay();
+
+    if ('serviceWorker' in navigator && ['http:', 'https:'].includes(window.location.protocol)) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => undefined);
+      });
+    }
+  </script>
+</body>
+</html>
