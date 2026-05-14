@@ -347,10 +347,13 @@
         <option value="其他">其他</option>
       </select>
 
+      <label for="projectConcept" class="mt-4 block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">项目概念</label>
+      <textarea id="projectConcept" rows="3" class="ios-field mt-2 w-full resize-none px-3 py-3 text-[15px] leading-6" placeholder="一句话写清楚你想表达的概念，例如：把社区超市做成年轻人愿意打卡的邻里生活站"></textarea>
+
       <div id="logoStyleModule" class="mt-4">
         <div class="flex items-center justify-between">
           <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">类型风格</h2>
-          <span class="text-[12px] text-[#8E8E93]">三选一</span>
+          <span class="text-[12px] text-[#8E8E93]">六选一</span>
         </div>
         <div class="mt-3 grid grid-cols-3 gap-2">
           <input class="style-radio sr-only" type="radio" name="logoStyle" id="logoSimple" value="简洁现代" checked>
@@ -369,6 +372,24 @@
           <label for="logoHanddrawn" class="ios-option min-h-[76px] p-3">
             <span id="typeStyleLabel3" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">治愈可爱</span>
             <span id="typeStyleDesc3" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">圆润亲和</span>
+          </label>
+
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="typeStyleFour" value="">
+          <label for="typeStyleFour" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel4" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">先锋实验</span>
+            <span id="typeStyleDesc4" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">错位拼贴</span>
+          </label>
+
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="typeStyleFive" value="">
+          <label for="typeStyleFive" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel5" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">高级极简</span>
+            <span id="typeStyleDesc5" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">留白质感</span>
+          </label>
+
+          <input class="style-radio sr-only" type="radio" name="logoStyle" id="typeStyleSix" value="">
+          <label for="typeStyleSix" class="ios-option min-h-[76px] p-3">
+            <span id="typeStyleLabel6" class="block text-[14px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">沉浸场景</span>
+            <span id="typeStyleDesc6" class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">氛围叙事</span>
           </label>
         </div>
       </div>
@@ -590,6 +611,7 @@
 
     const titleInput = document.getElementById('title');
     const projectTypeInput = document.getElementById('projectType');
+    const projectConceptInput = document.getElementById('projectConcept');
     const ideaInput = document.getElementById('idea');
     const imageRatioInput = document.getElementById('imageRatio');
     const ratioText = document.getElementById('ratioText');
@@ -602,94 +624,148 @@
     const typeStyleLabels = [
       document.getElementById('typeStyleLabel1'),
       document.getElementById('typeStyleLabel2'),
-      document.getElementById('typeStyleLabel3')
+      document.getElementById('typeStyleLabel3'),
+      document.getElementById('typeStyleLabel4'),
+      document.getElementById('typeStyleLabel5'),
+      document.getElementById('typeStyleLabel6')
     ];
     const typeStyleDescs = [
       document.getElementById('typeStyleDesc1'),
       document.getElementById('typeStyleDesc2'),
-      document.getElementById('typeStyleDesc3')
+      document.getElementById('typeStyleDesc3'),
+      document.getElementById('typeStyleDesc4'),
+      document.getElementById('typeStyleDesc5'),
+      document.getElementById('typeStyleDesc6')
     ];
     const typeStyleInputs = [
       document.getElementById('logoSimple'),
       document.getElementById('logoComplex'),
-      document.getElementById('logoHanddrawn')
+      document.getElementById('logoHanddrawn'),
+      document.getElementById('typeStyleFour'),
+      document.getElementById('typeStyleFive'),
+      document.getElementById('typeStyleSix')
     ];
 
     const typeStyleOptions = {
       'IP设计': [
         ['潮玩立体', '3D家族', '潮玩立体：3D家族群像、盲盒质感、主色点缀'],
         ['国潮符号', '文化纹样', '国潮符号：传统元素提取、纹样转译、现代潮流'],
-        ['治愈可爱', '圆润亲和', '治愈可爱：圆润比例、软萌表情、生活场景']
+        ['治愈可爱', '圆润亲和', '治愈可爱：圆润比例、软萌表情、生活场景'],
+        ['暗黑怪趣', '反差萌', '暗黑怪趣：低明度色、怪趣表情、反差萌气质'],
+        ['赛博萌宠', '发光科技', '赛博萌宠：霓虹发光、机械配件、未来街区'],
+        ['手作泥塑', '质朴肌理', '手作泥塑：黏土质感、手工痕迹、民艺温度']
       ],
       'LOGO设计': [
         ['简洁现代', '几何极简', '简洁现代：几何线条、极简造型、低饱和度'],
         ['复杂精致', '细节层次', '复杂精致：细节丰富、层次分明、装饰性强'],
-        ['手绘插画', '笔触独特', '手绘插画：手绘质感、笔触明显、风格独特']
+        ['手绘插画', '笔触独特', '手绘插画：手绘质感、笔触明显、风格独特'],
+        ['东方篆刻', '印章感', '东方篆刻：印章结构、汉字转译、文化识别'],
+        ['潮流字标', '强记忆', '潮流字标：粗体字形、撞色辅助、社交头像友好'],
+        ['奢华徽章', '高级感', '奢华徽章：徽章结构、金属质感、精品品牌感']
       ],
       '包装设计': [
         ['高级礼盒', '精致陈列', '高级礼盒：礼盒结构、层次陈列、工艺质感'],
         ['货架冲击', '强识别', '货架冲击：大色块、强识别、远距离可读'],
-        ['自然手作', '材料肌理', '自然手作：纸张肌理、环保材料、温暖色调']
+        ['自然手作', '材料肌理', '自然手作：纸张肌理、环保材料、温暖色调'],
+        ['潮流快消', '年轻醒目', '潮流快消：高饱和配色、趣味图形、网红货架感'],
+        ['东方雅致', '淡雅留白', '东方雅致：留白包装、淡彩纹样、礼品仪式感'],
+        ['未来科技', '冷感材质', '未来科技：银色膜材、渐变光效、透明结构']
       ],
       '插画设计': [
         ['叙事绘本', '场景故事', '叙事绘本：完整场景、故事动线、人物关系'],
         ['商业潮流', '高饱和', '商业潮流：撞色构图、潮流符号、强视觉冲击'],
-        ['东方诗意', '留白意境', '东方诗意：留白、淡彩、水墨肌理']
+        ['东方诗意', '留白意境', '东方诗意：留白、淡彩、水墨肌理'],
+        ['暗黑奇幻', '戏剧光影', '暗黑奇幻：高反差光影、怪诞角色、神秘氛围'],
+        ['复古漫画', '颗粒质感', '复古漫画：网点纹理、复古配色、分镜构成'],
+        ['扁平图形', '清爽秩序', '扁平图形：几何人物、清晰轮廓、图标化场景']
       ],
       '品牌设计': [
         ['高级极简', '留白克制', '高级极简：大留白、低饱和、精致物料'],
         ['年轻潮流', '撞色几何', '年轻潮流：撞色系统、几何图形、社交传播感'],
-        ['亲和生活', '温暖场景', '亲和生活：生活化场景、圆润图形、真实互动']
+        ['亲和生活', '温暖场景', '亲和生活：生活化场景、圆润图形、真实互动'],
+        ['东方文化', '文脉质感', '东方文化：传统符号、现代网格、文化质感'],
+        ['科技未来', '数字系统', '科技未来：发光界面、数据图形、未来场景'],
+        ['复古精品', '怀旧质感', '复古精品：复古字体、颗粒照片、经典物料']
       ],
       '图案设计': [
         ['传统纹样', '文化转译', '传统纹样：纹样提取、连续秩序、东方色调'],
         ['潮流图形', '大胆撞色', '潮流图形：高对比配色、节奏重复、街头感'],
-        ['自然肌理', '柔和连续', '自然肌理：植物纹理、柔和配色、细腻重复']
+        ['自然肌理', '柔和连续', '自然肌理：植物纹理、柔和配色、细腻重复'],
+        ['童趣涂鸦', '自由手绘', '童趣涂鸦：手绘线条、趣味符号、活泼节奏'],
+        ['奢华织纹', '精致秩序', '奢华织纹：细密重复、金属点缀、织物质感'],
+        ['赛博迷幻', '渐变发光', '赛博迷幻：荧光渐变、数字纹样、视觉眩晕感']
       ],
       '服装设计': [
         ['先锋廓形', '结构感', '先锋廓形：夸张轮廓、结构线、秀场张力'],
         ['日常机能', '实穿细节', '日常机能：功能口袋、模块细节、面料性能'],
-        ['东方新中式', '含蓄层次', '东方新中式：盘扣、叠穿、克制色调']
+        ['东方新中式', '含蓄层次', '东方新中式：盘扣、叠穿、克制色调'],
+        ['街头潮牌', '松弛张力', '街头潮牌：宽松版型、图案印花、街拍场景'],
+        ['未来机能', '科技面料', '未来机能：反光材质、模块穿戴、冷色光影'],
+        ['浪漫礼服', '柔美层次', '浪漫礼服：轻纱层次、曲线廓形、精致细节']
       ],
       '信息可视化设计': [
         ['极简数据', '清晰秩序', '极简数据：网格清晰、颜色克制、阅读顺畅'],
         ['科技大屏', '发光界面', '科技大屏：深色底、发光线条、动态数据感'],
-        ['手绘信息图', '亲和说明', '手绘信息图：图标化表达、轻松阅读、亲和配色']
+        ['手绘信息图', '亲和说明', '手绘信息图：图标化表达、轻松阅读、亲和配色'],
+        ['新闻图解', '理性叙事', '新闻图解：分层叙事、地图图表、清晰证据链'],
+        ['品牌数据', '高级可视', '品牌数据：品牌色系统、精致图表、商业发布感'],
+        ['展览导视', '空间阅读', '展览导视：大字号图标、空间路径、导览逻辑']
       ],
       '书籍装帧设计': [
         ['文学典雅', '纸张质感', '文学典雅：纸张肌理、细腻排版、低饱和色'],
         ['先锋实验', '错位构成', '先锋实验：错位排版、强留白、材料实验'],
-        ['商业精品', '精装陈列', '商业精品：精装质感、系列陈列、工艺细节']
+        ['商业精品', '精装陈列', '商业精品：精装质感、系列陈列、工艺细节'],
+        ['东方线装', '传统书卷', '东方线装：书卷气质、竖排秩序、雅致留白'],
+        ['潮流杂志', '大图冲击', '潮流杂志：大图裁切、粗体标题、强版面节奏'],
+        ['童书趣味', '温暖插画', '童书趣味：插画角色、明亮色彩、亲和翻阅']
       ],
       '产品设计': [
         ['极简科技', '干净高端', '极简科技：干净背景、产品特写、低饱和材质'],
         ['生活温度', '真实使用', '生活温度：人物互动、生活场景、温暖材质'],
-        ['未来概念', '发光结构', '未来概念：透明材质、发光线条、概念场景']
+        ['未来概念', '发光结构', '未来概念：透明材质、发光线条、概念场景'],
+        ['儿童友好', '圆润安全', '儿童友好：圆角造型、明亮配色、安全比例'],
+        ['环保材料', '自然质感', '环保材料：再生材质、自然肌理、低碳场景'],
+        ['专业工具', '理性精密', '专业工具：精密结构、功能拆解、工程质感']
       ],
       '工业设计': [
         ['理性工程', '结构清晰', '理性工程：爆炸结构、材料说明、功能秩序'],
         ['硬核机能', '机械力量', '硬核机能：金属质感、粗犷结构、强对比光影'],
-        ['未来装备', '科技冷感', '未来装备：流线造型、科技线条、冷色调']
+        ['未来装备', '科技冷感', '未来装备：流线造型、科技线条、冷色调'],
+        ['医疗洁净', '安全可信', '医疗洁净：白色洁净、圆润结构、可信赖质感'],
+        ['户外耐用', '强韧材料', '户外耐用：耐候材质、防护结构、真实环境'],
+        ['交通出行', '速度流线', '交通出行：空气动力线条、运动姿态、速度感']
       ],
       '交互设计': [
         ['iOS极简', '留白清晰', 'iOS极简：大留白、清晰层级、圆角界面'],
         ['潮流应用', '大胆界面', '潮流应用：高对比色、动态图形、强社交感'],
-        ['数据产品', '理性看板', '数据产品：卡片系统、图表秩序、信息密度可控']
+        ['数据产品', '理性看板', '数据产品：卡片系统、图表秩序、信息密度可控'],
+        ['游戏化体验', '趣味反馈', '游戏化体验：成就反馈、角色引导、动效节点'],
+        ['无障碍友好', '清楚易用', '无障碍友好：大字号、强对比、操作路径清晰'],
+        ['未来界面', '空间交互', '未来界面：玻璃拟态、悬浮面板、空间层级']
       ],
       '室内设计': [
         ['高级商业', '质感空间', '高级商业：克制材质、重点照明、空间留白'],
         ['温暖生活', '自然材质', '温暖生活：木材肌理、柔和灯光、人物活动'],
-        ['未来沉浸', '光影装置', '未来沉浸：发光结构、沉浸体验、戏剧光影']
+        ['未来沉浸', '光影装置', '未来沉浸：发光结构、沉浸体验、戏剧光影'],
+        ['东方禅意', '静谧留白', '东方禅意：木石水景、低饱和色、静谧留白'],
+        ['年轻社交', '活力打卡', '年轻社交：亮色节点、互动装置、拍照动线'],
+        ['复古工业', '粗粝质感', '复古工业：裸露结构、金属砖石、低调灯光']
       ],
       '景观设计': [
         ['自然生态', '植物层次', '自然生态：植物群落、生态路径、柔和边界'],
         ['城市活力', '人群互动', '城市活力：活动节点、人群互动、公共家具'],
-        ['东方园林', '借景留白', '东方园林：留白水景、借景构图、诗意节点']
+        ['东方园林', '借景留白', '东方园林：留白水景、借景构图、诗意节点'],
+        ['儿童友好', '安全趣味', '儿童友好：趣味地形、安全铺装、探索节点'],
+        ['夜景光影', '沉浸灯光', '夜景光影：线性灯光、夜间活动、氛围节点'],
+        ['韧性生态', '雨洪花园', '韧性生态：雨水花园、生态廊道、可持续系统']
       ],
       '其他': [
         ['极简展示', '作品为主', '极简展示：完整作品大图、少量关键词、充足留白'],
         ['实验拼贴', '强视觉', '实验拼贴：错位构成、材料拼贴、视觉冲击'],
-        ['场景叙事', '应用氛围', '场景叙事：应用场景、氛围光影、真实落地']
+        ['场景叙事', '应用氛围', '场景叙事：应用场景、氛围光影、真实落地'],
+        ['潮流视觉', '大胆撞色', '潮流视觉：撞色构图、强标题、社交传播感'],
+        ['东方质感', '含蓄留白', '东方质感：材料肌理、留白构图、文化气质'],
+        ['科技未来', '数字光感', '科技未来：发光线条、渐变空间、抽象图形']
       ]
     };
 
@@ -823,19 +899,19 @@
       return defaults[projectType] || [];
     }
 
-    function derivativeRulesText(projectType, title, keywords) {
+    function derivativeRulesText(projectType, title, keywords, projectConcept = '') {
       if (projectType === '其他') {
         return [];
       }
 
-      const subject = detectThemeSubject(projectType, title, keywords);
+      const subject = detectThemeSubject(projectType, `${title} ${projectConcept}`, keywords);
       const source = subject ? subject.items : defaultDerivativeItems(projectType);
       return pickSome(source, 2, 3).map((item) => `根据主题补充展示${item}的应用效果`);
     }
 
-    function typeRulesText(projectType, title, keywords) {
+    function typeRulesText(projectType, title, keywords, projectConcept = '') {
       const rules = typeRules[projectType];
-      const derivatives = derivativeRulesText(projectType, title, keywords);
+      const derivatives = derivativeRulesText(projectType, title, keywords, projectConcept);
       const compactRules = rules ? pickSome(rules, 1, 2) : [];
       const derivative = derivatives.length > 0 ? [randomPick(derivatives)] : [];
       const typeStyleRule = selectedLogoStyle();
@@ -931,16 +1007,18 @@
     function boardInputs() {
       const ratio = ratioValues();
       const title = cleanText(titleInput.value, '未命名A3竞赛展板');
+      const projectConcept = cleanText(projectConceptInput.value, '');
       const keywords = cleanText(ideaInput.value, '图多字少、强主视觉、清晰层级、材料细节、竞赛表达');
       const customInput = document.getElementById('customRequirements') || document.getElementById('customRequirement');
       return {
         preset: selectedPreset(),
         title,
         projectType: projectTypeInput.value,
+        projectConcept,
         keywords,
         customRequirements: cleanText(customInput?.value || '', ''),
         logoStyle: selectedLogoStyle(),
-        tone: detectThemeTone(title, keywords),
+        tone: detectThemeTone(`${title} ${projectConcept}`, keywords),
         randomProfile: randomizationProfile(),
         imageRatio: ratio.imageRatio,
         textRatio: ratio.textRatio,
@@ -995,6 +1073,7 @@ ${styleRulesText(preset, tone)}`;
         '禁止任何段落式文字',
         '禁止任何完整句子',
         '禁止单行超过 8 字',
+        '禁止出现展板编号',
         '禁止说明性长文',
         '禁止文字堆叠',
         '禁止院校标志',
@@ -1007,9 +1086,9 @@ ${styleRulesText(preset, tone)}`;
     }
 
     function commonIntro(inputs, countText) {
-      const { projectType, title, keywords } = inputs;
+      const { projectType, title, projectConcept, keywords } = inputs;
       return `请为我生成${countText} A3 尺寸 (297mm×420mm) 竖版竞赛展板，用于 ${projectType} 竞赛，项目名称：${title}。
-核心关键词：${keywords}`;
+${projectConcept ? `项目概念：${projectConcept}\n` : ''}核心关键词：${keywords}`;
     }
 
     function typeBoardStructures(projectType) {
@@ -1515,8 +1594,8 @@ ${styleRulesText(preset, tone)}`;
       return structures[projectType] || structures['其他'];
     }
 
-    function formatStructure(board, index) {
-      return `【展板 ${index}：${board.title}】\n${board.lines.join('\n')}`;
+    function formatStructure(board) {
+      return `【画面结构】\n${board.lines.join('\n')}`;
     }
 
     function seriesFiveExtraStructures(inputs) {
@@ -1548,23 +1627,24 @@ ${styleRulesText(preset, tone)}`;
     }
 
     function buildBoardPrompt(inputs, board, index, total) {
-      const { projectType, title, keywords, customRequirements, preset } = inputs;
-      const onlyLine = total > 1 ? `请只生成系列展板的第 ${index} 张，不要生成其他展板。` : '请只生成这一张展板。';
+      const { projectType, title, projectConcept, keywords, customRequirements, preset } = inputs;
+      const onlyLine = total > 1 ? `请只生成第 ${index} 张图，不要生成其他图。` : '请只生成这一张图。';
       const seriesRule = total > 1
         ? '系列统一：统一色调、统一网格、统一标题系统、统一视觉语言'
         : '视觉统一：统一色调、统一标题系统、统一视觉语言';
       return `${onlyLine}
 ${commonIntro(inputs, '一张')}
-当前展板：展板 ${index} / ${total}，${board.title}
+本张主题：${board.title}
 ${seriesRule}
+画面中禁止出现“展板${index}”“展板 ${index}”“Panel ${index}”等编号文字
 
 ${coreRequirementsText(inputs)}
-${typeRulesText(projectType, title, keywords)}
+${typeRulesText(projectType, title, keywords, projectConcept)}
 ${customRequirementsText(customRequirements)}
 ${styleSectionText(inputs)}
 ${creativeDirectionText()}
 
-${formatStructure(board, index)}
+${formatStructure(board)}
 
 ${strictForbiddenText(inputs)}`;
     }
@@ -1644,6 +1724,7 @@ ${buildBoardPrompt(inputs, board, index + 1, 5)}`).join('\n\n')}`;
     clearBtn.addEventListener('click', () => {
       titleInput.value = '';
       projectTypeInput.value = 'IP设计';
+      projectConceptInput.value = '';
       ideaInput.value = '';
       imageRatioInput.value = '80';
       document.getElementById('singleBoard').checked = true;
