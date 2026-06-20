@@ -335,8 +335,6 @@
         <option value="包装设计">包装设计</option>
         <option value="插画设计">插画设计</option>
         <option value="品牌设计">品牌设计</option>
-        <option value="文创设计">文创设计</option>
-        <option value="桌游设计">桌游设计</option>
         <option value="图案设计">图案设计</option>
         <option value="服装设计">服装设计</option>
         <option value="信息可视化设计">信息可视化设计</option>
@@ -416,44 +414,32 @@
     <section class="ios-card p-4">
       <div class="flex items-center justify-between">
         <h2 class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">风格选择</h2>
-        <span class="text-[12px] text-[#8E8E93]">可单选/多选</span>
+        <span class="text-[12px] text-[#8E8E93]">四选一</span>
       </div>
 
-      <div class="mt-4 grid grid-cols-3 gap-2">
-        <input class="style-radio sr-only" type="checkbox" name="school" id="rca" value="rca" checked>
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <input class="style-radio sr-only" type="radio" name="school" id="rca" value="rca" checked>
         <label for="rca" class="ios-option min-h-[84px] p-3">
           <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">RCA</span>
           <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">实验叙事、留白、强视觉主图</span>
         </label>
 
-        <input class="style-radio sr-only" type="checkbox" name="school" id="ual" value="ual">
+        <input class="style-radio sr-only" type="radio" name="school" id="ual" value="ual">
         <label for="ual" class="ios-option min-h-[84px] p-3">
           <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">UAL</span>
           <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">过程拼贴、网格节奏、强对比</span>
         </label>
 
-        <input class="style-radio sr-only" type="checkbox" name="school" id="caa" value="caa">
+        <input class="style-radio sr-only" type="radio" name="school" id="caa" value="caa">
         <label for="caa" class="ios-option min-h-[84px] p-3">
           <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">中国美院</span>
           <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">东方秩序、材料肌理、克制题跋</span>
         </label>
 
-        <input class="style-radio sr-only" type="checkbox" name="school" id="tsinghua" value="tsinghua">
+        <input class="style-radio sr-only" type="radio" name="school" id="tsinghua" value="tsinghua">
         <label for="tsinghua" class="ios-option min-h-[84px] p-3">
           <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">清华美院</span>
           <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">理性网格、信息层级、竞赛表达</span>
-        </label>
-
-        <input class="style-radio sr-only" type="checkbox" name="school" id="redDot" value="redDot">
-        <label for="redDot" class="ios-option min-h-[84px] p-3">
-          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">红点奖</span>
-          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">产品质感、留白、获奖级展示</span>
-        </label>
-
-        <input class="style-radio sr-only" type="checkbox" name="school" id="zcool" value="zcool">
-        <label for="zcool" class="ios-option min-h-[84px] p-3">
-          <span class="block text-[15px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">站酷风格</span>
-          <span class="mt-1 block text-[12px] leading-5 text-[#8E8E93]">潮流视觉、强封面、传播感</span>
         </label>
       </div>
     </section>
@@ -533,30 +519,6 @@
           '极简主义，去除多余装饰',
           '色彩明快，对比适中'
         ]
-      },
-      redDot: {
-        name: '红点奖展示风格',
-        style: '国际奖项级产品呈现，强调主视觉、材质质感、克制留白和评审可读性',
-        layout: '超大主图 + 少量模块化细节 + 精准图标标注，像获奖作品展示页',
-        rules: [
-          '大面积留白，产品主图占据绝对视觉中心',
-          '材质、工艺、结构细节以高清特写呈现',
-          '信息层级极简，文字只做标签和参数',
-          '背景干净克制，突出作品本身的高级感',
-          '模块比例严谨，像国际设计奖作品版式'
-        ]
-      },
-      zcool: {
-        name: '站酷视觉风格',
-        style: '强封面感、年轻潮流、视觉传播力强，适合线上作品集与社交媒体展示',
-        layout: '大标题封面感 + 潮流图形拼贴 + 高对比色块 + 作品效果图矩阵',
-        rules: [
-          '封面冲击力强，首屏主视觉醒目',
-          '色彩更大胆，适合社交平台传播',
-          '图形元素更活泼，允许错位和叠压',
-          '标题节奏明确，画面更有设计师作品集感',
-          '整体有潮流感，但仍保持图多字少'
-        ]
       }
     };
 
@@ -590,18 +552,6 @@
         '包含LOGO、标准色、标准字、辅助图形',
         '展示品牌在名片、信纸、手提袋等物料上的应用',
         '体现品牌的整体调性和视觉统一性'
-      ],
-      '文创设计': [
-        '展示完整文创产品家族与核心主打产品',
-        '包含产品材质、工艺、包装和陈列效果',
-        '体现文化元素转译与现代消费场景',
-        '展示文创产品在售卖、展览或礼品场景中的应用'
-      ],
-      '桌游设计': [
-        '展示桌游盒体、棋盘、卡牌、棋子和说明书系统',
-        '包含核心玩法流程图和回合机制示意',
-        '展示玩家开盒、摆盘和对局场景',
-        '体现世界观、美术风格和组件识别系统'
       ],
       '图案设计': [
         '展示完整的四方连续图案',
@@ -737,22 +687,6 @@
         ['科技未来', '数字系统', '科技未来：发光界面、数据图形、未来场景'],
         ['复古精品', '怀旧质感', '复古精品：复古字体、颗粒照片、经典物料']
       ],
-      '文创设计': [
-        ['博物馆精品', '雅致陈列', '博物馆精品：文化符号、精致陈列、礼品质感'],
-        ['国潮市集', '热闹年轻', '国潮市集：高饱和配色、摊位场景、年轻消费感'],
-        ['非遗手作', '材料温度', '非遗手作：手工肌理、传统工艺、质朴温度'],
-        ['潮玩周边', '系列家族', '潮玩周边：盲盒、徽章、玩偶、强系列感'],
-        ['节庆礼品', '仪式感', '节庆礼品：礼盒包装、节日配色、赠礼场景'],
-        ['文旅伴手礼', '地域记忆', '文旅伴手礼：城市符号、旅行场景、轻便陈列']
-      ],
-      '桌游设计': [
-        ['奇幻冒险', '世界观强', '奇幻冒险：地图棋盘、角色阵营、沉浸世界观'],
-        ['推理解谜', '悬疑氛围', '推理解谜：线索卡牌、暗色光影、案件板布局'],
-        ['亲子教育', '明亮友好', '亲子教育：圆润组件、明亮配色、易读规则图'],
-        ['国风策略', '东方棋局', '国风策略：古风地图、阵营棋子、书卷质感'],
-        ['派对社交', '轻松活泼', '派对社交：高对比卡牌、趣味表情、多人互动'],
-        ['科幻阵营', '未来战术', '科幻阵营：发光棋盘、机械组件、战术界面']
-      ],
       '图案设计': [
         ['传统纹样', '文化转译', '传统纹样：纹样提取、连续秩序、东方色调'],
         ['潮流图形', '大胆撞色', '潮流图形：高对比配色、节奏重复、街头感'],
@@ -839,12 +773,9 @@
       return document.querySelector('input[name="boardCount"]:checked').value;
     }
 
-    function selectedPresets() {
-      const styleIds = ['rca', 'ual', 'caa', 'tsinghua', 'redDot', 'zcool'];
-      const selected = styleIds
-        .filter((id) => document.getElementById(id).checked)
-        .map((id) => presets[id]);
-      return selected.length > 0 ? selected : [presets.rca];
+    function selectedPreset() {
+      const value = document.querySelector('input[name="school"]:checked').value;
+      return presets[value];
     }
 
     function selectedLogoStyle() {
@@ -926,12 +857,10 @@
       return scored[0]?.tone || randomPick(tones);
     }
 
-    function styleRulesText(presetList, tone) {
-      const selected = Array.isArray(presetList) ? presetList : [presetList];
-      const styleNames = selected.map((preset) => preset.name).join(' + ');
-      const baseRules = selected.flatMap((preset) => pickSome(preset.rules, 1, 1));
+    function styleRulesText(preset, tone) {
+      const baseRules = pickSome(preset.rules, 2, 2);
       const toneRule = randomPick(tone.rules);
-      return [`风格融合：${styleNames}`, ...baseRules, `${tone.name}适配：${toneRule}`].map((rule) => `- ${rule}`).join('\n');
+      return [...baseRules, `${tone.name}适配：${toneRule}`].map((rule) => `- ${rule}`).join('\n');
     }
 
     function detectThemeSubject(projectType, title, keywords) {
@@ -957,8 +886,6 @@
         '包装设计': ['手提袋', '产品标签', '礼盒套装', '宣传海报'],
         '插画设计': ['明信片', '海报', '贴纸', '帆布袋'],
         '品牌设计': ['购物袋', '会员卡', '员工制服', '导视牌'],
-        '文创设计': ['冰箱贴', '徽章', '帆布袋', '明信片', '礼盒'],
-        '桌游设计': ['游戏盒', '卡牌', '棋子', '棋盘', '说明书'],
         '图案设计': ['布料应用', '包装纸', '手机壳', '家居产品'],
         '服装设计': ['吊牌', '穿搭海报', '配饰', '面料样卡'],
         '信息可视化设计': ['数据卡片', '动态图示', '导览图', '信息海报'],
@@ -1084,7 +1011,7 @@
       const keywords = cleanText(ideaInput.value, '图多字少、强主视觉、清晰层级、材料细节、竞赛表达');
       const customInput = document.getElementById('customRequirements') || document.getElementById('customRequirement');
       return {
-        presets: selectedPresets(),
+        preset: selectedPreset(),
         title,
         projectType: projectTypeInput.value,
         projectConcept,
@@ -1121,12 +1048,12 @@ ${ironLawText()}
     }
 
     function styleSectionText(inputs, title = '【选中风格】排版规范') {
-      const { presets: presetList, tone } = inputs;
+      const { preset, tone } = inputs;
       return `${title}
-仅参考所选风格的构图、留白、层级与视觉节奏
-禁止在画面中出现任何参考风格名称、奖项名称、院校名称、校徽、logo、水印
+仅参考所选院校风格的构图、留白、层级与视觉节奏
+禁止在画面中出现任何院校名称、校徽、logo、水印
 主题调性：${tone.name}
-${styleRulesText(presetList, tone)}`;
+${styleRulesText(preset, tone)}`;
     }
 
     function creativeDirectionText() {
@@ -1149,7 +1076,7 @@ ${styleRulesText(presetList, tone)}`;
         '禁止出现展板编号',
         '禁止说明性长文',
         '禁止文字堆叠',
-        '禁止参考风格标志',
+        '禁止院校标志',
         '禁止留白不足'
       ];
       const extra = inputs.randomProfile.forbidden
@@ -1343,151 +1270,6 @@ ${projectConcept ? `项目概念：${projectConcept}\n` : ''}核心关键词：$
               '中部主视觉区：核心物料组合',
               '下方 3×2 网格：6 个不同物料小图',
               '物料建议：名片、信纸、手提袋、门头、社媒、制服'
-            ]
-          }
-        ],
-        '文创设计': [
-          {
-            title: '概念总览',
-            lines: [
-              '顶部通栏：文创名称 + 英文名称',
-              '定位短语：源于文化元素 / 地域符号 / 非遗灵感的互动型文创玩具',
-              '一句话概念：可触摸、把玩、组合与收藏的文创类型',
-              '概念转译：把主题文化转化为轻松、日常、有趣的陪伴体验',
-              'CONCEPT：From cultural inspiration to a playful collectible object',
-              '灵感来源1：提取形态 / 纹样 / 色彩 / 结构特征',
-              '灵感来源2：转化为造型语言 / 交互动作 / 产品细节',
-              '灵感来源3：形成具有记忆点的视觉符号',
-              '产品定位：互动文创 / 收藏玩具 / 桌面陪伴 / 礼品开发',
-              '适用场景：博物馆 / 城市礼品 / 文旅商店 / 校园文创 / 展览周边',
-              '核心特点：轻互动 / 强记忆 / 可落地'
-            ]
-          },
-          {
-            title: '互动玩法',
-            lines: [
-              '顶部通栏：互动玩法 / INTERACTION',
-              '主视觉区：产品被反复把玩的动态效果图',
-              '玩法一：轻触产品部位，触发摇摆 / 回弹 / 旋转 / 发声 / 变形',
-              '玩法一关键词：轻松、治愈、即时反馈',
-              '玩法二：磁吸 / 插拔 / 旋钮 / 滑动 / 拼接结构',
-              '玩法二关键词：自由组合、可替换、可收藏',
-              '玩法三：表情 / 配件 / 色彩 / 姿态个性化选择',
-              '玩法三关键词：个性化、陪伴感、社交传播',
-              '互动逻辑：看见它 → 想触摸它 → 愿意把玩它 → 最后收藏它'
-            ]
-          },
-          {
-            title: '模块系统',
-            lines: [
-              '顶部通栏：模块系统 / MODULAR KIT',
-              '主视觉区：可替换模块爆炸图',
-              '主体模块：承载主要造型与文化识别',
-              '表情模块：表情 / 图案 / 面板，用于不同情绪与收藏版本',
-              '配件模块：头饰 / 底座 / 挂件 / 外壳，增强趣味与系列化',
-              '色彩系统：主色 + 辅助色 + 点缀色',
-              '色彩来源：文化色彩 / 地域景观 / 非遗工艺 / 情绪氛围',
-              '包装设计：保护产品，也可转化为展示底座 / 互动场景 / 收藏盒 / 陈列装置',
-              '系列延展：基础款 / 限定款 / 节日款 / 城市款 / 联名款'
-            ]
-          },
-          {
-            title: '落地设计',
-            lines: [
-              '顶部通栏：落地设计 / FEASIBILITY',
-              '主视觉区：产品结构分解与材料展示',
-              '结构说明：外壳材料形成稳定主体造型',
-              '连接结构：磁吸 / 卡扣 / 插接 / 旋转轴，便于替换组装',
-              '互动结构：配重 / 弹性件 / 转轴 / 模块组件，实现轻量互动',
-              '底座结构：保证稳定摆放与把玩安全',
-              '材料建议：主体材料、配件材料、包装材料',
-              '尺寸建议：高度 / 宽度 / 深度，适合单手把玩与桌面陈列',
-              '工艺建议：注塑成型 / 表面喷涂 / UV印刷 / 磁吸装配 / 环保纸浆内托',
-              '可持续策略：减少复杂零件 / 模块复用 / 包装二次使用 / 长期收藏'
-            ]
-          },
-          {
-            title: '使用场景',
-            lines: [
-              '顶部通栏：使用场景 / IN USE',
-              '主视觉区：完整生活方式场景大图',
-              '场景一：书桌 / 展柜 / 床头 / 办公桌，作为治愈桌面玩具',
-              '场景二：博物馆商店 / 文旅空间 / 展览现场，作为文化伴手礼',
-              '场景三：换装 / 组合 / 收藏 / 打卡玩法，提升参与感与传播性',
-              '用户价值：可触摸、可理解、可带走的文化符号',
-              '产品价值：好看 / 好玩 / 好卖 / 好延展',
-              '画面要求：一张大场景为主，少量关键词，避免说明文字'
-            ]
-          }
-        ],
-        '桌游设计': [
-          {
-            title: '概念主视觉',
-            lines: [
-              '顶部通栏：主题名称 + 英文名称 + 一句短标语',
-              '项目定位：具有东方文化内核的创新桌游',
-              '主视觉区：完整文创桌游产品渲染图',
-              '主视觉包含：棋盘、棋子、核心机关或互动组件、包装盒',
-              '整体风格：高级极简、东方现代、图多字少、低饱和色、留白',
-              '视觉重点：真实产品感，像可量产上市的高端桌游',
-              '底部小图：3-4 个局部细节图',
-              '禁止：奖项LOGO、红点奖LOGO、传统民俗堆砌、大红大金、廉价卡通',
-              '目标：把东方文化转译成现代产品语言'
-            ]
-          },
-          {
-            title: '玩法机制',
-            lines: [
-              '顶部通栏：玩法机制 / How It Plays',
-              '主视觉区：清晰棋盘玩法示意图',
-              '图像语言：简洁箭头、路径线、编号标注、优雅动线',
-              '动作1：中文动作 / 英文动作 + 一句短说明',
-              '动作2：中文动作 / 英文动作 + 一句短说明',
-              '动作3：中文动作 / 英文动作 + 一句短说明',
-              '下方特写：三个精致局部特写，每个对应一个动作',
-              '短文案：一句话玩法解释',
-              '风格：高级产品说明图，不像普通说明书'
-            ]
-          },
-          {
-            title: '东方内核',
-            lines: [
-              '顶部通栏：东方内核 / Cultural Core',
-              '主视觉区：产品氛围图 + 抽象东方符号',
-              '表达重点：把东方文化元素转译为现代互动玩法',
-              '核心概念：一句文化转译说明',
-              '关键词1：中文 / 英文 + 一句短解释',
-              '关键词2：中文 / 英文 + 一句短解释',
-              '关键词3：中文 / 英文 + 一句短解释',
-              '可用视觉：门环、屏风、竹影、风线、水纹、皮影光影等',
-              '要求：现代化、抽象化、极简化，不像民俗海报'
-            ]
-          },
-          {
-            title: '组件系统',
-            lines: [
-              '顶部通栏：组件系统 / Components',
-              '主视觉区：高级产品摄影式组件平铺图',
-              '展示组件：棋盘、棋子、卡牌、机关件、收纳盒、任务卡',
-              '画面包含：完整组件平铺图、收纳盒打开图、包装盒、材质细节特写',
-              '每个组件只放极短标签，不要长说明',
-              '强调：可量产、易收纳、具备礼品属性',
-              '材质表现：磨砂塑料 / 木质 / 纸质卡牌 / 金属件 / 半透明亚克力 / 陶瓷感树脂',
-              '风格：干净、精致、高端设计产品展示页'
-            ]
-          },
-          {
-            title: '使用场景',
-            lines: [
-              '顶部通栏：使用场景 / Play Scene',
-              '主视觉区：一张完整大场景 A3 海报图，占据整张展板主体',
-              '场景环境：现代中式客厅 / 茶室 / 书房 / 青年社交空间 / 展览体验区',
-              '人物：几位年轻人正在玩这款桌游',
-              '桌面：清楚展示棋盘、棋子、互动组件和包装盒',
-              '核心动作：移动门框 / 旋转风盘 / 拉线 / 投影 / 翻转机关',
-              '氛围：高级、温暖、克制、现代东方、有生活方式感',
-              '短文案：一句场景文案',
-              '禁止：多图拼贴、普通家庭聚会照片、商业促销感'
             ]
           }
         ],
@@ -1844,112 +1626,16 @@ ${projectConcept ? `项目概念：${projectConcept}\n` : ''}核心关键词：$
       ];
     }
 
-    function singleBoardStructure(inputs) {
-      const boards = typeBoardStructures(inputs.projectType);
-      const keyModules = boards.slice(0, Math.min(3, boards.length)).map((board) => board.title).join(' / ');
-      return {
-        title: '完整单张总览',
-        lines: [
-          '定位：这是一张完整成稿总览板，不是系列第一页',
-          '顶部通栏：项目名称 + 英文副标题 + 3个关键词，占比 10%-12%',
-          '中部主视觉区：最终核心作品 / 产品 / 场景完整大图，占比 55%-65%',
-          `核心内容：压缩呈现 ${keyModules}`,
-          '下方模块1：概念来源，用图标/符号/小图表达',
-          '下方模块2：设计系统，用色卡/材料/组件小样表达',
-          '下方模块3：关键细节，用2-3个局部特写表达',
-          '下方模块4：应用场景，用1-2张真实效果图表达',
-          '整体要求：一眼看懂项目完整价值，图像主导，文字只做标签'
-        ]
-      };
-    }
-
-    function seriesThreeStructures(inputs) {
-      const boards = typeBoardStructures(inputs.projectType);
-      if (inputs.projectType === '文创设计') {
-        return [
-          boards[0],
-          {
-            title: '互动玩法与模块系统',
-            lines: [
-              '顶部通栏：互动玩法 / 模块系统',
-              '主视觉区：产品被把玩、旋转、组合的动态效果图',
-              '模块区：玩法一 / 玩法二 / 玩法三，用图标和动作箭头表达',
-              '模块区：主体模块 / 表情模块 / 配件模块，做爆炸图或拆解图',
-              '色彩区：主色、辅助色、点缀色，来自文化色彩或地域记忆',
-              '包装区：包装转化为展示底座 / 互动场景 / 收藏盒',
-              '文字要求：只保留玩法名、模块名、关键词'
-            ]
-          },
-          {
-            title: '落地设计与使用场景',
-            lines: [
-              '顶部通栏：落地设计 / 使用场景',
-              '主视觉区：完整生活方式场景大图',
-              '结构区：外壳、连接、互动、底座结构，用示意图表达',
-              '材料区：主体材料、配件材料、包装材料，用材质样板表达',
-              '工艺区：注塑、喷涂、UV、磁吸、环保纸托，用图标表达',
-              '场景区：桌面、文旅商店、展览现场、社交打卡',
-              '价值区：好看 / 好玩 / 好卖 / 好延展'
-            ]
-          }
-        ];
-      }
-
-      if (inputs.projectType === '桌游设计') {
-        return [
-          boards[0],
-          {
-            title: '玩法机制与东方内核',
-            lines: [
-              '顶部通栏：玩法机制 / 东方内核',
-              '主视觉区：清晰棋盘玩法示意图',
-              '流程区：动作1 / 动作2 / 动作3，用箭头、路径线、编号表达',
-              '文化区：东方文化元素转译为现代互动玩法',
-              '符号区：门环、屏风、竹影、风线、水纹、皮影光影等抽象元素',
-              '特写区：3个核心动作对应的局部特写',
-              '文字要求：只保留动作名、文化关键词、极短标签'
-            ]
-          },
-          {
-            title: '组件系统与使用场景',
-            lines: [
-              '顶部通栏：组件系统 / Play Scene',
-              '主视觉区：现代东方生活方式对局大场景',
-              '组件区：棋盘、棋子、卡牌、机关件、收纳盒、任务卡平铺展示',
-              '收纳区：收纳盒打开图 + 包装盒 + 材质细节特写',
-              '人物区：几位年轻人正在进行核心互动动作',
-              '氛围区：高级、温暖、克制、现代东方、社交感',
-              '禁止：多图碎拼、普通家庭聚会感、促销海报感'
-            ]
-          }
-        ];
-      }
-
-      return boards.slice(0, 3);
-    }
-
-    function continuityText(index, total) {
-      if (total === 1) {
-        return '单张完整：本张必须独立讲完整个项目，包含概念、作品主体、关键细节和应用场景。';
-      }
-
-      if (index === 1) {
-        return '系列基准：本张负责建立整套视觉系统，后续展板必须100%延续本张的风格、配色、字体、网格、留白、边框和图形语言。';
-      }
-
-      return `系列延续：本张是第 ${index} 张，必须与第1张和上一张在风格、配色、字体、网格、留白、边框、图形语言上100%统一，只更换内容模块。`;
-    }
-
     function buildBoardPrompt(inputs, board, index, total) {
-      const { projectType, title, projectConcept, keywords, customRequirements } = inputs;
-      const outputScope = total > 1
-        ? `本次输出：系列第 ${index} 张 A3 展板，画面只呈现本张主题内容。`
-        : '本次输出：一张完整 A3 展板，画面讲完整个项目。';
-      return `${outputScope}
+      const { projectType, title, projectConcept, keywords, customRequirements, preset } = inputs;
+      const onlyLine = total > 1 ? `请只生成第 ${index} 张图，不要生成其他图。` : '请只生成这一张图。';
+      const seriesRule = total > 1
+        ? '系列统一：统一色调、统一网格、统一标题系统、统一视觉语言'
+        : '视觉统一：统一色调、统一标题系统、统一视觉语言';
+      return `${onlyLine}
 ${commonIntro(inputs, '一张')}
 本张主题：${board.title}
-${continuityText(index, total)}
-参考说明：只参考所选风格的排版气质，不要在画面中出现参考名称、奖项名称、院校名称或任何logo。
+${seriesRule}
 画面中禁止出现“展板${index}”“展板 ${index}”“Panel ${index}”等编号文字
 
 ${coreRequirementsText(inputs)}
@@ -1965,17 +1651,17 @@ ${strictForbiddenText(inputs)}`;
 
     function buildSinglePrompt() {
       const inputs = boardInputs();
-      const board = singleBoardStructure(inputs);
+      const board = typeBoardStructures(inputs.projectType)[0];
       return buildBoardPrompt(inputs, board, 1, 1);
     }
 
     function buildSeriesPrompt() {
       const inputs = boardInputs();
-      const boards = seriesThreeStructures(inputs);
-      return `下面三段请分三次复制给 ChatGPT，每段生成一张独立 A3 图。三张必须形成完整系列叙事。
+      const boards = typeBoardStructures(inputs.projectType);
+      return `下面三段请分三次复制给 ChatGPT，每次只出一张图。
 
 ${boards.map((board, index) => `====================
-第${index + 1}次复制：${board.title}
+展板${index + 1}：${board.title}
 ====================
 ${buildBoardPrompt(inputs, board, index + 1, 3)}`).join('\n\n')}`;
     }
@@ -1983,15 +1669,11 @@ ${buildBoardPrompt(inputs, board, index + 1, 3)}`).join('\n\n')}`;
     function buildSeriesFivePrompt() {
       const inputs = boardInputs();
       const { projectType } = inputs;
-      const typeBoards = typeBoardStructures(projectType);
-      const boards = typeBoards.length >= 5 ? typeBoards : [...typeBoards, ...seriesFiveExtraStructures(inputs)];
-      const guide = typeBoards.length >= 5
-        ? `下面五段请分五次复制给 ChatGPT，每段生成一张独立 A3 图。五张均为${projectType}专属结构，并形成完整系列叙事。`
-        : `下面五段请分五次复制给 ChatGPT，每段生成一张独立 A3 图。前3张为${projectType}专属结构，第4张文创合集，第5张整体场景效果图，并形成完整系列叙事。`;
-      return `${guide}
+      const boards = [...typeBoardStructures(projectType), ...seriesFiveExtraStructures(inputs)];
+      return `下面五段请分五次复制给 ChatGPT，每次只出一张图。前3张为${projectType}专属结构，第4张文创合集，第5张整体场景效果图。
 
 ${boards.map((board, index) => `====================
-第${index + 1}次复制：${board.title}
+展板${index + 1}：${board.title}
 ====================
 ${buildBoardPrompt(inputs, board, index + 1, 5)}`).join('\n\n')}`;
     }
@@ -2046,9 +1728,6 @@ ${buildBoardPrompt(inputs, board, index + 1, 5)}`).join('\n\n')}`;
       ideaInput.value = '';
       imageRatioInput.value = '80';
       document.getElementById('singleBoard').checked = true;
-      ['ual', 'caa', 'tsinghua', 'redDot', 'zcool'].forEach((id) => {
-        document.getElementById(id).checked = false;
-      });
       document.getElementById('rca').checked = true;
       document.getElementById('logoSimple').checked = true;
       output.value = '';
